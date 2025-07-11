@@ -1,4 +1,3 @@
-com\birdy\fragileLife\commands\gift.class
 com\birdy\fragileLife\chat\ChatColors.class
 com\birdy\fragileLife\FragileLife.class
 com\birdy\fragileLife\chat\ChatColors$ColorOption.class
@@ -7,6 +6,7 @@ com\birdy\fragileLife\managers\TeamManager.class
 com\birdy\fragileLife\listeners\PlayerDamageListener.class
 com\birdy\fragileLife\listeners\PlayerDeathListener.class
 com\birdy\fragileLife\managers\ProfileManager.class
+com\birdy\fragileLife\commands\GiftCommand.class
 com\birdy\fragileLife\chat\ChatGUI.class
 com\birdy\fragileLife\chat\PlayerChatEvent.class
 com\birdy\fragileLife\chat\ChatCommand.class

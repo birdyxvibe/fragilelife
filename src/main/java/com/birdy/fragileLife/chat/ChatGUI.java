@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ChatGUI implements Listener {
+public class ChatGUI {
 
     private static final String GUI_TITLE = "Select Chat Color";
     private static final int GUI_SIZE = 36;

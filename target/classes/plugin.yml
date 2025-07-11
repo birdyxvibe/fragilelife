@@ -7,3 +7,5 @@ commands:
     description: Change your chat Color!
     aliases:
       - c
+  gift:
+    description: Gift another player a heart (8h Cooldown)
