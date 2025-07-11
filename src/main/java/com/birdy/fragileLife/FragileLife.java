@@ -23,19 +23,15 @@ public final class FragileLife extends JavaPlugin {
     public static final Component pluginPrefix =
             Component.text("[")
                     .color(NamedTextColor.WHITE)
-            .append(Component.text("Fragile")
+            .append(Component.text("☁")
                     .color(TextColor.fromHexString("#4CCCE9")))
-            .append(Component.text("Utilities")
-                    .color(TextColor.fromHexString("#7abbc0")))
             .append(Component.text("] ")
                     .color(NamedTextColor.WHITE));
 
     public static final Component pluginWarningPrefix =
             Component.text("[")
                     .color(NamedTextColor.WHITE)
-                    .append(Component.text("Fragile")
-                            .color(TextColor.fromHexString("#e93b38")))
-                    .append(Component.text("Utilities")
+                    .append(Component.text("✖")
                             .color(TextColor.fromHexString("#c0193c")))
                     .append(Component.text("] ")
                             .color(NamedTextColor.WHITE));

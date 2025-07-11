@@ -24,8 +24,6 @@ public class ChatGUIListener implements Listener {
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e){
-        Inventory inv = e.getInventory();
-
         if (!e.getView().title().equals(Component.text(GUI_TITLE))) return;
 
         e.setCancelled(true);
@@ -45,8 +43,8 @@ public class ChatGUIListener implements Listener {
                 profile.setChatColor(colorData.color.asHexString());
 
                 p.sendMessage(FragileLife.pluginPrefix
-                        .append(Component.text("You've changed your chat color to ").color(NamedTextColor.GRAY))
-                        .append(Component.text(plainText).color(colorData.color)));
+                        .append(Component.text("You've changed your chat color to ", NamedTextColor.GRAY))
+                        .append(Component.text(plainText, colorData.color)));
             }
         }
     }

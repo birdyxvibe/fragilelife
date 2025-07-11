@@ -29,18 +29,27 @@ public class PlayerJoinListener implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e){
         Player p = e.getPlayer();
-        Profile profile = profileManager.getProfile(p.getUniqueId());
-        String greeting = profile.getGreeting().replace("PLAYER", p.getName());
-        TextColor greetingColor = Greetings.GREETINGS.get(greeting);
-        e.joinMessage(Component.text("+ ").color(NamedTextColor.GREEN)
-                .append(Component.text(greeting).color(greetingColor)));
+
         if (!p.hasPlayedBefore()) {
             p.getAttribute(Attribute.MAX_HEALTH).setBaseValue(30 * 2);
             p.setHealth(30 * 2);
 
-            Bukkit.getScheduler().runTask(plugin, () -> {
-                teamManager.assignPlayerToTeam(p, "green");
-            });
+            Bukkit.getScheduler().runTask(plugin, () -> teamManager.assignPlayerToTeam(p, "green"));
+
+            e.joinMessage(Component.text("+ ", NamedTextColor.GREEN)
+                    .append(Component.text(p.getName(), NamedTextColor.GOLD))
+                    .append(Component.text(" has joined for the first time. Welcome!", NamedTextColor.LIGHT_PURPLE)));
+
+            return;
         }
+
+
+        Profile profile = profileManager.getProfile(p.getUniqueId());
+        String greeting = profile.getGreeting();
+        TextColor greetingColor = Greetings.GREETINGS.get(greeting);
+
+        e.joinMessage(Component.text("+ ", NamedTextColor.GREEN)
+                .append(Component.text(greeting.replace("PLAYER", p.getName()), greetingColor)));
+
     }
 }

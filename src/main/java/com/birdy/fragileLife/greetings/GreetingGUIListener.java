@@ -1,7 +1,6 @@
 package com.birdy.fragileLife.greetings;
 
 import com.birdy.fragileLife.FragileLife;
-import com.birdy.fragileLife.chat.ChatColors;
 import com.birdy.fragileLife.managers.ProfileManager;
 import com.birdy.fragileLife.schemas.Profile;
 import net.kyori.adventure.text.Component;
@@ -26,8 +25,6 @@ public class GreetingGUIListener implements Listener {
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e){
-        Inventory inv = e.getInventory();
-
         if (!e.getView().title().equals(Component.text(GUI_TITLE))) return;
 
         e.setCancelled(true);
@@ -40,16 +37,16 @@ public class GreetingGUIListener implements Listener {
         if(clickedItem.hasItemMeta() && clickedItem.getItemMeta().hasDisplayName()){
             Component displayName = clickedItem.getItemMeta().displayName();
             if(displayName != null) {
-                String greetingPlainText = PlainTextComponentSerializer.plainText().serialize(displayName).substring(2);
+                String greetingPlainText = PlainTextComponentSerializer.plainText().serialize(displayName).substring(2).replace(p.getName(), "PLAYER");
                 TextColor greetingColor = Greetings.GREETINGS.get(greetingPlainText);
 
                 Profile profile = profileManager.getProfile(p.getUniqueId());
                 profile.setGreeting(greetingPlainText);
 
                 p.sendMessage(FragileLife.pluginPrefix
-                        .append(Component.text("You've changed your greeting to ").color(NamedTextColor.GRAY))
-                                .append(Component.text("+ ")).color(NamedTextColor.GREEN)
-                        .append(Component.text(greetingPlainText.replace("PLAYER",p.getName())).color(greetingColor)));
+                        .append(Component.text("You've changed your greeting to ", NamedTextColor.GRAY))
+                        .append(Component.text("+ ", NamedTextColor.GREEN)
+                        .append(Component.text(greetingPlainText.replace("PLAYER",p.getName()), greetingColor))));
             }
         }
     }

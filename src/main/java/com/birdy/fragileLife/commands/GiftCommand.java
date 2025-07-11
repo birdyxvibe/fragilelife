@@ -12,7 +12,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.scoreboard.Team;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -28,10 +27,10 @@ public class GiftCommand implements CommandExecutor {
         this.teamManager = teamManager;
     }
 
+    @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if (sender instanceof Player) {
-            Player p = (Player) sender;
+        if (sender instanceof Player p) {
             Player recipient = Bukkit.getPlayer(args[0]);
 
             Profile profile = profileManager.getProfile(p.getUniqueId());
@@ -41,16 +40,16 @@ public class GiftCommand implements CommandExecutor {
             // Ensure command not on cooldown
             if (now.before(cooldownEndDate)) {
                 p.sendMessage(FragileLife.pluginWarningPrefix
-                        .append(Component.text("You may use this command again in ").color(NamedTextColor.GRAY))
-                        .append(Component.text(formatHoursUntil(cooldownEndDate)).color(NamedTextColor.YELLOW)));
+                        .append(Component.text("You may use this command again in ", NamedTextColor.GRAY))
+                        .append(Component.text(formatHoursUntil(cooldownEndDate), NamedTextColor.YELLOW)));
                 return true;
             }
 
             if (recipient == null) {
                 p.sendMessage(FragileLife.pluginWarningPrefix
-                        .append(Component.text("Player ").color(NamedTextColor.GRAY))
-                        .append(Component.text(args[0]).color(NamedTextColor.DARK_GRAY))
-                        .append(Component.text(" is not online.").color(NamedTextColor.GRAY)));
+                        .append(Component.text("Player ", NamedTextColor.GRAY))
+                        .append(Component.text(args[0], NamedTextColor.DARK_GRAY))
+                        .append(Component.text(" is not online.", NamedTextColor.GRAY)));
                 return true;
             }
 
@@ -60,13 +59,13 @@ public class GiftCommand implements CommandExecutor {
 
             if (pColor == NamedTextColor.GRAY) {
                 p.sendMessage(FragileLife.pluginWarningPrefix
-                        .append(Component.text("Dead players cannot gift.").color(NamedTextColor.GRAY)));
+                        .append(Component.text("Dead players cannot gift.", NamedTextColor.GRAY)));
                 return true;
             }
 
             if (rColor == NamedTextColor.GRAY) {
                 p.sendMessage(FragileLife.pluginWarningPrefix
-                        .append(Component.text("You cannot gift to dead players.").color(NamedTextColor.GRAY)));
+                        .append(Component.text("You cannot gift to dead players.", NamedTextColor.GRAY)));
                 return true;
             }
 
@@ -74,25 +73,25 @@ public class GiftCommand implements CommandExecutor {
             double recipientHealth = recipient.getAttribute(Attribute.MAX_HEALTH).getBaseValue();
             if (recipientHealth > 58) {
                 p.sendMessage(FragileLife.pluginWarningPrefix
-                        .append(Component.text("Player ").color(NamedTextColor.GRAY))
-                        .append(Component.text(args[0]).color(rColor))
-                        .append(Component.text(" already has 30").color(NamedTextColor.GRAY))
-                        .append(Component.text(" ♥").color(NamedTextColor.RED)));
+                        .append(Component.text("Player ", NamedTextColor.GRAY))
+                        .append(Component.text(args[0], rColor))
+                        .append(Component.text(" already has 30", NamedTextColor.GRAY))
+                        .append(Component.text(" ♥", NamedTextColor.RED)));
                 return true;
             }
 
             // Gift heart
             recipient.getAttribute(Attribute.MAX_HEALTH).setBaseValue(recipientHealth + 2);
             p.sendMessage(FragileLife.pluginPrefix
-                    .append(Component.text("You've gifted one").color(NamedTextColor.GRAY))
-                    .append(Component.text(" ♥ ").color(NamedTextColor.RED))
-                    .append(Component.text("to ").color(NamedTextColor.GRAY))
-                    .append(Component.text(args[0]).color(rColor)));
+                    .append(Component.text("You've gifted one", NamedTextColor.GRAY))
+                    .append(Component.text(" ♥ ", NamedTextColor.RED))
+                    .append(Component.text("to ", NamedTextColor.GRAY))
+                    .append(Component.text(args[0], rColor)));
 
             recipient.sendMessage(FragileLife.pluginPrefix
-                    .append(Component.text(p.getName()).color(pColor))
-                    .append(Component.text(" gifted you one").color(NamedTextColor.GRAY))
-                    .append(Component.text(" ♥").color(NamedTextColor.RED)));
+                    .append(Component.text(p.getName(), pColor))
+                    .append(Component.text(" gifted you one", NamedTextColor.GRAY))
+                    .append(Component.text(" ♥", NamedTextColor.RED)));
 
             // Set Cooldown
             Instant cooldownEnd = Instant.now().plus(8, ChronoUnit.HOURS);

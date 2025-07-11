@@ -2,17 +2,14 @@ package com.birdy.fragileLife.chat;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -48,9 +45,9 @@ public class ChatGUI {
             ChatColors.ColorOption colorOption = entry.getValue();
             ItemStack item = new ItemStack(colorOption.material);
             ItemMeta meta = item.getItemMeta();
-            meta.displayName(Component.text(entry.getKey()).color(colorOption.color).decorate(TextDecoration.BOLD));
+            meta.displayName(Component.text(entry.getKey(), colorOption.color).decorate(TextDecoration.BOLD));
             List<Component> lore = Arrays.stream(colorOption.lore)
-                    .map(line -> Component.text(line).color(NamedTextColor.WHITE))
+                    .map(line -> Component.text(line, NamedTextColor.WHITE))
                             .collect(Collectors.toList());
             meta.lore(lore);
             item.setItemMeta(meta);

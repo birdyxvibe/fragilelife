@@ -1,10 +1,8 @@
 package com.birdy.fragileLife.greetings;
 
-import com.birdy.fragileLife.chat.ChatColors;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
-import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -12,10 +10,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class GreetingGUI {
 
@@ -46,8 +41,8 @@ public class GreetingGUI {
             TextColor greetingColor = entry.getValue();
             ItemStack item = new ItemStack(Material.WRITABLE_BOOK);
             ItemMeta meta = item.getItemMeta();
-            meta.displayName(Component.text("+ ").color(NamedTextColor.GREEN)
-                    .append(Component.text(entry.getKey()).color(greetingColor)));
+            meta.displayName(Component.text("+ ", NamedTextColor.GREEN)
+                    .append(Component.text(entry.getKey().replace("PLAYER", p.getName()), greetingColor)));
             item.setItemMeta(meta);
 
 
