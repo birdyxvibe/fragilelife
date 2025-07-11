@@ -4,8 +4,10 @@ main: com.birdy.fragileLife.FragileLife
 api-version: '1.21'
 commands:
   chat:
-    description: Change your chat Color!
+    description: Change your chat color!
     aliases:
       - c
   gift:
     description: Gift another player a heart (8h Cooldown)
+  greetings:
+    description: Change your join message

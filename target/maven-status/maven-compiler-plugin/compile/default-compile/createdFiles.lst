@@ -11,4 +11,3 @@ com\birdy\fragileLife\chat\ChatGUI.class
 com\birdy\fragileLife\chat\PlayerChatEvent.class
 com\birdy\fragileLife\chat\ChatCommand.class
 com\birdy\fragileLife\chat\ChatGUIListener.class
-com\birdy\fragileLife\listeners\PlayerJoinListener.class

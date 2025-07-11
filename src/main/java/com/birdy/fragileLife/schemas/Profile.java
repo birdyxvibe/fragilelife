@@ -11,6 +11,8 @@ public class Profile {
     private String chatColor = "#FFFFFF";
     private String greeting = "PLAYER";
     private String giftCooldown = new Date().toInstant().toString();
+    private boolean isChatBold = false;
+    private boolean isChatItalic = false;
 
     // Add more fields here...
 
@@ -35,7 +37,13 @@ public class Profile {
     public String getGiftCooldown() { return giftCooldown; }
     public void setGiftCooldown(String giftCooldown) { this.giftCooldown = giftCooldown; }
 
+    public boolean isChatItalic() { return isChatItalic; }
 
+    public void setChatItalic(boolean chatItalic) { isChatItalic = chatItalic; }
 
-    // Add more helper functions here...
+    public boolean isChatBold() { return isChatBold; }
+
+    public void setChatBold(boolean chatBold) { isChatBold = chatBold; }
+
+    // Add more getter and setter functions here...
 }

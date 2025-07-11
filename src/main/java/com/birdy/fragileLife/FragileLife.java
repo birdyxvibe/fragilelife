@@ -53,9 +53,9 @@ public final class FragileLife extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerChatEvent(teamManager, profileManager), this);
         getServer().getPluginManager().registerEvents(new GreetingGUIListener(profileManager), this);
 
-        getCommand("chat").setExecutor(new ChatCommand());
+        getCommand("chat").setExecutor(new ChatCommand(profileManager));
         getCommand("gift").setExecutor(new GiftCommand(profileManager, teamManager));
-        getCommand("greetings").setExecutor(new GreetingCommand());
+        getCommand("greetings").setExecutor(new GreetingCommand(profileManager));
     }
 
     @Override
