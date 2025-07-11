@@ -3,6 +3,7 @@ package com.birdy.fragileLife;
 import com.birdy.fragileLife.chat.ChatCommand;
 import com.birdy.fragileLife.chat.ChatGUIListener;
 import com.birdy.fragileLife.chat.PlayerChatEvent;
+import com.birdy.fragileLife.commands.GiftCommand;
 import com.birdy.fragileLife.listeners.PlayerDamageListener;
 import com.birdy.fragileLife.listeners.PlayerDeathListener;
 import com.birdy.fragileLife.listeners.PlayerJoinListener;
@@ -45,6 +46,7 @@ public final class FragileLife extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerChatEvent(teamManager, profileManager), this);
 
         getCommand("chat").setExecutor(new ChatCommand());
+        getCommand("gift").setExecutor(new GiftCommand());
     }
 
     @Override

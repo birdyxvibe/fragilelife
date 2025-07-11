@@ -2,12 +2,14 @@ package com.birdy.fragileLife.schemas;
 
 import net.kyori.adventure.text.format.TextColor;
 
+import java.util.Date;
 import java.util.UUID;
 
 public class Profile {
 
     private final UUID uuid;
     private String chatColor = "#FFFFFF";
+    private Date giftCooldown = new Date();
 
     // Add more fields here...
 
@@ -27,5 +29,9 @@ public class Profile {
         this.chatColor = chatColor;
     }
 
-    // Add more getters/setters here...
+    public Date getGiftCooldown() { return giftCooldown; }
+
+    public void setGiftCooldown(Date giftCooldown) {this.giftCooldown = giftCooldown;}
+
+    // Add more helper functions here...
 }
