@@ -4,10 +4,11 @@ import com.birdy.fragileLife.chat.ChatCommand;
 import com.birdy.fragileLife.chat.ChatGUIListener;
 import com.birdy.fragileLife.chat.PlayerChatEvent;
 import com.birdy.fragileLife.commands.GiftCommand;
+import com.birdy.fragileLife.greetings.GreetingCommand;
+import com.birdy.fragileLife.greetings.GreetingGUIListener;
 import com.birdy.fragileLife.listeners.PlayerDamageListener;
 import com.birdy.fragileLife.listeners.PlayerDeathListener;
-import com.birdy.fragileLife.listeners.PlayerJoinListener;
-import com.birdy.fragileLife.schemas.Profile;
+import com.birdy.fragileLife.greetings.PlayerJoinListener;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
@@ -49,14 +50,16 @@ public final class FragileLife extends JavaPlugin {
         TeamManager teamManager = new TeamManager();
         teamManager.initializeTeams();
 
-        getServer().getPluginManager().registerEvents(new PlayerJoinListener(this, teamManager), this);
+        getServer().getPluginManager().registerEvents(new PlayerJoinListener(this, teamManager, profileManager), this);
         getServer().getPluginManager().registerEvents(new PlayerDamageListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerDeathListener(teamManager), this);
         getServer().getPluginManager().registerEvents(new ChatGUIListener(profileManager), this);
         getServer().getPluginManager().registerEvents(new PlayerChatEvent(teamManager, profileManager), this);
+        getServer().getPluginManager().registerEvents(new GreetingGUIListener(profileManager), this);
 
         getCommand("chat").setExecutor(new ChatCommand());
         getCommand("gift").setExecutor(new GiftCommand(profileManager, teamManager));
+        getCommand("greetings").setExecutor(new GreetingCommand());
     }
 
     @Override

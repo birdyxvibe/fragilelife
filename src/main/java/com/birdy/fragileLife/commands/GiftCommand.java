@@ -73,12 +73,12 @@ public class GiftCommand implements CommandExecutor {
             // Ensure they have less than 29 hearts
             double recipientHealth = recipient.getAttribute(Attribute.MAX_HEALTH).getBaseValue();
             if (recipientHealth > 58) {
-                    p.sendMessage(FragileLife.pluginWarningPrefix
-                            .append(Component.text("Player ").color(NamedTextColor.GRAY))
-                            .append(Component.text(args[0]).color(rColor))
-                            .append(Component.text(" already has 30").color(NamedTextColor.GRAY))
-                            .append(Component.text(" ♥").color(NamedTextColor.RED)));
-                    return true;
+                p.sendMessage(FragileLife.pluginWarningPrefix
+                        .append(Component.text("Player ").color(NamedTextColor.GRAY))
+                        .append(Component.text(args[0]).color(rColor))
+                        .append(Component.text(" already has 30").color(NamedTextColor.GRAY))
+                        .append(Component.text(" ♥").color(NamedTextColor.RED)));
+                return true;
             }
 
             // Gift heart

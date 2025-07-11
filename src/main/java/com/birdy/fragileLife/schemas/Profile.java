@@ -9,6 +9,7 @@ public class Profile {
 
     private final UUID uuid;
     private String chatColor = "#FFFFFF";
+    private String greeting = "PLAYER";
     private String giftCooldown = new Date().toInstant().toString();
 
     // Add more fields here...
@@ -24,14 +25,17 @@ public class Profile {
     public String getChatColor() {
         return chatColor;
     }
-
     public void setChatColor(String chatColor) {
         this.chatColor = chatColor;
     }
 
-    public String getGiftCooldown() { return giftCooldown; }
+    public String getGreeting() { return greeting; }
+    public void setGreeting(String greeting) { this.greeting = greeting; }
 
-    public void setGiftCooldown(String giftCooldown) {this.giftCooldown = giftCooldown;}
+    public String getGiftCooldown() { return giftCooldown; }
+    public void setGiftCooldown(String giftCooldown) { this.giftCooldown = giftCooldown; }
+
+
 
     // Add more helper functions here...
 }
