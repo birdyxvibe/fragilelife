@@ -1,0 +1,58 @@
+package com.birdy.fragileLife.chat;
+
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Map;
+
+public class ChatGUI implements Listener {
+
+    private static final String GUI_TITLE = "Select Chat Color";
+
+    public static void open(Player p){
+        Inventory gui = Bukkit.createInventory(null, 36, Component.text(GUI_TITLE));
+
+        final ItemStack fillerItem1 = createFiller(Material.GRAY_STAINED_GLASS_PANE);
+        final ItemStack fillerItem2 = createFiller(Material.CHAIN);
+
+        for(int i = 0; i < 36; i++) {
+            if (i <= 8 || i >= 27) {
+                gui.setItem(i, fillerItem1);
+            } else if (i % 9 == 0 || i % 9 == 8) {
+                gui.setItem(i, fillerItem2);
+            }
+        }
+
+        int slot = 10;
+        for(Map.Entry<String, ChatColors.ColorOption> entry : ChatColors.COLORS.entrySet()) {
+            if(slot == 17) slot += 2;
+
+            ChatColors.ColorOption colorOption = entry.getValue();
+            ItemStack item = new ItemStack(colorOption.material);
+            ItemMeta meta = item.getItemMeta();
+            meta.displayName(Component.text(entry.getKey()).color(colorOption.color).decorate(TextDecoration.BOLD));
+            item.setItemMeta(meta);
+            gui.setItem(slot++, item);
+        }
+
+        p.openInventory(gui);
+    }
+
+
+    public static ItemStack createFiller(Material material){
+        ItemStack item = new ItemStack(material);
+        ItemMeta meta = item.getItemMeta();
+        meta.displayName(Component.empty());
+
+        item.setItemMeta(meta);
+        return item;
+    }
+
+}

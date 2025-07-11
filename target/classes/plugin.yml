@@ -1,0 +1,9 @@
+name: FragileLife
+version: '1.0-SNAPSHOT'
+main: com.birdy.fragileLife.FragileLife
+api-version: '1.21'
+commands:
+  chat:
+    description: Change your chat Color!
+    aliases:
+      - c
