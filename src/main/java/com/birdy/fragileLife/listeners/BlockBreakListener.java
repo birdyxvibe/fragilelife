@@ -29,6 +29,7 @@ public class BlockBreakListener implements Listener {
     public void onBlockBreak(BlockBreakEvent e) {
         Player p = e.getPlayer();
         Profile profile = profileManager.getProfile(p.getUniqueId());
+        if (p.getInventory().getItemInMainHand().getType() == Material.AIR) {return;}
         if (p.getInventory().getItemInMainHand().getItemMeta().hasEnchant(Enchantment.SILK_TOUCH))
         {
             p.sendMessage(FragileLife.pluginWarningPrefix
