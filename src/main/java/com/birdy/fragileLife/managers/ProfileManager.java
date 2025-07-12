@@ -104,8 +104,25 @@ public class ProfileManager {
                         field.set(profile, section.getBoolean(key));
                     } else if (field.getType() == String.class) {
                         field.set(profile, (String) value);
-                    } // Extend if you want more types
-
+                    } else if (key.equals("missionProgress")) {
+                        ConfigurationSection mapSection = section.getConfigurationSection(key);
+                        if (mapSection != null) {
+                            Map<String, Integer> map = new HashMap<>();
+                            for (String mapKey : mapSection.getKeys(false)) {
+                                map.put(mapKey, mapSection.getInt(mapKey));
+                            }
+                            field.set(profile, map);
+                        }
+                    } else if (key.equals("missionCooldowns")) {
+                        ConfigurationSection mapSection = section.getConfigurationSection(key);
+                        if (mapSection != null) {
+                            Map<String, String> map = new HashMap<>();
+                            for (String mapKey : mapSection.getKeys(false)) {
+                                map.put(mapKey, mapSection.getString(mapKey));
+                            }
+                            field.set(profile, map);
+                        }
+                    }
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
@@ -123,10 +140,24 @@ public class ProfileManager {
             try {
                 Object value = field.get(profile);
 
+                if (value == null) return;
+
                 // Skip UUID - it’s the key
                 if (field.getType() == UUID.class) continue;
 
-                if (value != null) {
+                if (key.equals("missionProgress") && value instanceof Map) {
+                    ConfigurationSection mapSection = section.createSection(key);
+                    Map<?, ?> map = (Map<?, ?>) value;
+                    for (Map.Entry<?, ?> entry : map.entrySet()) {
+                        mapSection.set(entry.getKey().toString(), ((Number) entry.getValue()).intValue());
+                    }
+                } else if (key.equals("missionCooldowns") && value instanceof Map) {
+                    ConfigurationSection mapSection = section.createSection(key);
+                    Map<?, ?> map = (Map<?, ?>) value;
+                    for (Map.Entry<?, ?> entry : map.entrySet()) {
+                        mapSection.set(entry.getKey().toString(), entry.getValue().toString());
+                    }
+                } else {
                     section.set(key, value);
                 }
             } catch (IllegalAccessException e) {

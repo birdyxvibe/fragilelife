@@ -1,0 +1,25 @@
+// Note: these hearts will be additional to the 30
+    // REFRESH TIME: MISSION : REWARD
+
+    /* PVP & Combat */
+        // 1D : Kill any player : Disable fall damage for x hours or feather falling boots
+        // 1D : Get 3 unique player kills : +30 hearts
+        // Always (single redeem) : Kill 5 players without dying : Permanent speed boost
+
+    /*  Mob-Related */
+        // 1D : Kill 100 hostile mobs: +10 heart
+        // 1D : Kill 100 passive mobs: +5 heart
+
+    /* Mining & Resource */
+        // 1D : Mine 10 diamonds : +10 hearts (~3000 diamonds in a 500x500 world, anti-xray plugin?)
+        // 1D : Mine 100 iron: +5 heart
+        // 1D : Find and mine an emerald : Temporary strength boost (30 min)
+
+    /* Survival & Skill-Based */
+        // 1D : Don’t take any damage for 1 hour : +5 Gapple (afk detection)
+
+    /* Movement & Risk */ //my idea here is to force roaming around the map
+        // Run 500 blocks without stopping : +1 heart
+
+    /* Social & Supportive */
+        // Gift another player a heart : +1 Gapple

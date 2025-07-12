@@ -1,8 +1,9 @@
 package com.birdy.fragileLife.schemas;
 
-import net.kyori.adventure.text.format.TextColor;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class Profile {
@@ -13,6 +14,9 @@ public class Profile {
     private String giftCooldown = new Date().toInstant().toString();
     private boolean isChatBold = false;
     private boolean isChatItalic = false;
+
+    private Map<String, Integer> missionProgress = new HashMap<>();
+    private Map<String, String> missionCooldowns = new HashMap<>();
 
     // Add more fields here...
 
@@ -44,6 +48,14 @@ public class Profile {
     public boolean isChatBold() { return isChatBold; }
 
     public void setChatBold(boolean chatBold) { isChatBold = chatBold; }
+
+    public int getMissionProgress(String id) { return missionProgress.getOrDefault(id,0); }
+
+    public void setMissionProgress(String id, int i) { this.missionProgress.put(id,i); }
+
+    public String getMissionCooldowns(String id) { return missionCooldowns.getOrDefault(id, ""); }
+
+    public void setMissionCooldowns(String id, String cd) { this.missionCooldowns.put(id,cd); }
 
     // Add more getter and setter functions here...
 }
