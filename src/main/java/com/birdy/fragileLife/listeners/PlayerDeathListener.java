@@ -1,7 +1,10 @@
 package com.birdy.fragileLife.listeners;
 
 import com.birdy.fragileLife.FragileLife;
+import com.birdy.fragileLife.managers.ProfileManager;
 import com.birdy.fragileLife.managers.TeamManager;
+import com.birdy.fragileLife.missions.KillPlayersMission;
+import com.birdy.fragileLife.schemas.Profile;
 import org.bukkit.GameMode;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
@@ -13,9 +16,12 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 public class PlayerDeathListener implements Listener {
 
     private final TeamManager teamManager;
+    private final ProfileManager profileManager;
 
-    public PlayerDeathListener(TeamManager teamManager){
+    public PlayerDeathListener(TeamManager teamManager, ProfileManager profileManager){
+
         this.teamManager = teamManager;
+        this.profileManager = profileManager;
     }
 
     @EventHandler
@@ -42,5 +48,13 @@ public class PlayerDeathListener implements Listener {
                 w.strikeLightningEffect(e.getPlayer().getLocation());
             }
         }
+
+        if (e.getEntity().getKiller() == null) return;
+
+        Player killer = e.getEntity().getKiller();
+        Profile profile = profileManager.getProfile(killer.getUniqueId());
+        KillPlayersMission killPlayersMission = new KillPlayersMission();
+
+        killPlayersMission.trigger(profile, killer, e);
     }
 }
