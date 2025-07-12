@@ -11,3 +11,5 @@ commands:
     description: Gift another player a heart (8h Cooldown)
   greetings:
     description: Change your join message
+  missions:
+    description: View the missions GUI

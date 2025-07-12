@@ -1,9 +1,8 @@
 package com.birdy.fragileLife.listeners;
 
-import com.birdy.fragileLife.FragileLife;
 import com.birdy.fragileLife.managers.ProfileManager;
 import com.birdy.fragileLife.managers.TeamManager;
-import com.birdy.fragileLife.missions.KillPlayersMission;
+import com.birdy.fragileLife.missions.types.KillPlayersMission;
 import com.birdy.fragileLife.schemas.Profile;
 import org.bukkit.GameMode;
 import org.bukkit.World;
@@ -54,7 +53,6 @@ public class PlayerDeathListener implements Listener {
         Player killer = e.getEntity().getKiller();
         Profile profile = profileManager.getProfile(killer.getUniqueId());
         KillPlayersMission killPlayersMission = new KillPlayersMission();
-
-        killPlayersMission.trigger(profile, killer, e);
+        killPlayersMission.trigger(profile,teamManager, killer, e);
     }
 }
