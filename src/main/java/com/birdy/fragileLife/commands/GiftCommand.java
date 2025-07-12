@@ -31,6 +31,19 @@ public class GiftCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if (sender instanceof Player p) {
+            NamedTextColor pColor = teamManager.getPlayerTeamColor(p);
+            if (pColor == NamedTextColor.GRAY) {
+                p.sendMessage(FragileLife.pluginWarningPrefix
+                        .append(Component.text("Dead players cannot gift.", NamedTextColor.GRAY)));
+                return true;
+            }
+
+            if (args.length == 0) {
+                p.sendMessage(FragileLife.pluginWarningPrefix
+                        .append(Component.text("Please specify the player you want to gift to.", NamedTextColor.GRAY)));
+                return true;
+            }
+
             Player recipient = Bukkit.getPlayer(args[0]);
 
             Profile profile = profileManager.getProfile(p.getUniqueId());
@@ -45,6 +58,12 @@ public class GiftCommand implements CommandExecutor {
                 return true;
             }
 
+            if (p == recipient) {
+                p.sendMessage(FragileLife.pluginWarningPrefix
+                        .append(Component.text("You cannot gift yourself.", NamedTextColor.GRAY)));
+                return true;
+            }
+
             if (recipient == null) {
                 p.sendMessage(FragileLife.pluginWarningPrefix
                         .append(Component.text("Player ", NamedTextColor.GRAY))
@@ -53,15 +72,7 @@ public class GiftCommand implements CommandExecutor {
                 return true;
             }
 
-
-            NamedTextColor pColor = teamManager.getPlayerTeamColor(p);
             NamedTextColor rColor = teamManager.getPlayerTeamColor(recipient);
-
-            if (pColor == NamedTextColor.GRAY) {
-                p.sendMessage(FragileLife.pluginWarningPrefix
-                        .append(Component.text("Dead players cannot gift.", NamedTextColor.GRAY)));
-                return true;
-            }
 
             if (rColor == NamedTextColor.GRAY) {
                 p.sendMessage(FragileLife.pluginWarningPrefix

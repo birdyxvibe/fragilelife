@@ -11,7 +11,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public class GreetingGUIListener implements Listener {
@@ -37,11 +36,33 @@ public class GreetingGUIListener implements Listener {
         if(clickedItem.hasItemMeta() && clickedItem.getItemMeta().hasDisplayName()){
             Component displayName = clickedItem.getItemMeta().displayName();
             if(displayName != null) {
-                String greetingPlainText = PlainTextComponentSerializer.plainText().serialize(displayName).substring(2).replace(p.getName(), "PLAYER");
-                TextColor greetingColor = Greetings.GREETINGS.get(greetingPlainText);
-
+                String greetingPlainText = PlainTextComponentSerializer.plainText().serialize(displayName);
                 Profile profile = profileManager.getProfile(p.getUniqueId());
+
+                // Random greeting functionality
+                if (greetingPlainText.equals("Random Greeting")) {
+                    if (profile.getGreeting().equals("RAND")) {
+                        p.sendMessage(FragileLife.pluginWarningPrefix
+                                .append(Component.text("Randomised greetings is already enabled", NamedTextColor.GRAY)));
+                        return;
+                    }
+                    profile.setGreeting("RAND");
+                    p.closeInventory();
+                    GreetingGUI.open(p, profileManager);
+
+                    p.sendMessage(FragileLife.pluginPrefix
+                            .append(Component.text("You have enabled randomised greetings.", NamedTextColor.GRAY)));
+                    return;
+                }
+
+                greetingPlainText = greetingPlainText.substring(2).replace(p.getName(), "PLAYER");
+
+                TextColor greetingColor = Greetings.GREETINGS.get(greetingPlainText);
                 profile.setGreeting(greetingPlainText);
+
+                // Refresh inventory for to highlight newly selected greeting
+                p.closeInventory();
+                GreetingGUI.open(p, profileManager);
 
                 p.sendMessage(FragileLife.pluginPrefix
                         .append(Component.text("You've changed your greeting to ", NamedTextColor.GRAY))

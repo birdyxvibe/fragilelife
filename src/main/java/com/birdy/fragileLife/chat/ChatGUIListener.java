@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import com.birdy.fragileLife.FragileLife;
 import com.birdy.fragileLife.managers.ProfileManager;
@@ -33,14 +32,38 @@ public class ChatGUIListener implements Listener {
 
         Player p = (Player)e.getWhoClicked();
 
+
         if(clickedItem.hasItemMeta() && clickedItem.getItemMeta().hasDisplayName()){
             Component displayName = clickedItem.getItemMeta().displayName();
             if(displayName != null) {
                 String plainText = PlainTextComponentSerializer.plainText().serialize(displayName);
+                Profile profile = profileManager.getProfile(p.getUniqueId());
+
+                if (plainText.equals("Bold") || plainText.equals("Italic")) {
+                    boolean active;
+                    if (plainText.equals("Bold")){
+                        active = profile.isChatBold();
+                        profile.setChatBold(!active);
+                    } else {
+                        active = profile.isChatItalic();
+                        profile.setChatItalic(!active);
+                }
+
+                p.closeInventory();
+                ChatGUI.open(p, profileManager);
+                p.sendMessage(FragileLife.pluginPrefix
+                        .append(Component.text(plainText, NamedTextColor.WHITE))
+                        .append(Component.text(" chat style has been ", NamedTextColor.GRAY))
+                        .append(Component.text(active ? "Disabled" : "Enabled", NamedTextColor.WHITE)));
+                return;
+            }
                 ChatColors.ColorOption colorData = ChatColors.COLORS.get(plainText);
 
-                Profile profile = profileManager.getProfile(p.getUniqueId());
                 profile.setChatColor(colorData.color.asHexString());
+
+                // Refresh inventory for to highlight newly selected color
+                p.closeInventory();
+                ChatGUI.open(p, profileManager);
 
                 p.sendMessage(FragileLife.pluginPrefix
                         .append(Component.text("You've changed your chat color to ", NamedTextColor.GRAY))

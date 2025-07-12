@@ -6,6 +6,7 @@ import com.birdy.fragileLife.listeners.PlayerChatListener;
 import com.birdy.fragileLife.commands.GiftCommand;
 import com.birdy.fragileLife.greetings.GreetingCommand;
 import com.birdy.fragileLife.greetings.GreetingGUIListener;
+import com.birdy.fragileLife.listeners.EntityDeathListener;
 import com.birdy.fragileLife.listeners.PlayerDamageListener;
 import com.birdy.fragileLife.listeners.PlayerDeathListener;
 import com.birdy.fragileLife.greetings.PlayerJoinListener;
@@ -50,14 +51,15 @@ public final class FragileLife extends JavaPlugin {
 
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(this, teamManager, profileManager), this);
         getServer().getPluginManager().registerEvents(new PlayerDamageListener(), this);
-        getServer().getPluginManager().registerEvents(new PlayerDeathListener(teamManager), this);
+        getServer().getPluginManager().registerEvents(new PlayerDeathListener(teamManager, profileManager), this);
         getServer().getPluginManager().registerEvents(new ChatGUIListener(profileManager), this);
         getServer().getPluginManager().registerEvents(new PlayerChatListener(teamManager, profileManager, reactionManager), this);
         getServer().getPluginManager().registerEvents(new GreetingGUIListener(profileManager), this);
+        getServer().getPluginManager().registerEvents(new EntityDeathListener(profileManager), this);
 
-        getCommand("chat").setExecutor(new ChatCommand());
+        getCommand("chat").setExecutor(new ChatCommand(profileManager));
         getCommand("gift").setExecutor(new GiftCommand(profileManager, teamManager));
-        getCommand("greetings").setExecutor(new GreetingCommand());
+        getCommand("greetings").setExecutor(new GreetingCommand(profileManager));
     }
 
     @Override

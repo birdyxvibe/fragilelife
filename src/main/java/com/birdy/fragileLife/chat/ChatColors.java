@@ -3,7 +3,6 @@ package com.birdy.fragileLife.chat;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.LinkedHashMap;
 
