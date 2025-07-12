@@ -2,15 +2,14 @@ package com.birdy.fragileLife;
 
 import com.birdy.fragileLife.chat.ChatCommand;
 import com.birdy.fragileLife.chat.ChatGUIListener;
-import com.birdy.fragileLife.listeners.PlayerChatListener;
+import com.birdy.fragileLife.listeners.*;
 import com.birdy.fragileLife.commands.GiftCommand;
 import com.birdy.fragileLife.greetings.GreetingCommand;
 import com.birdy.fragileLife.greetings.GreetingGUIListener;
-import com.birdy.fragileLife.listeners.EntityDeathListener;
-import com.birdy.fragileLife.listeners.PlayerDamageListener;
-import com.birdy.fragileLife.listeners.PlayerDeathListener;
 import com.birdy.fragileLife.greetings.PlayerJoinListener;
 import com.birdy.fragileLife.managers.ReactionManager;
+import com.birdy.fragileLife.missions.MissionCommand;
+import com.birdy.fragileLife.missions.MissionGUIListener;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
@@ -55,11 +54,14 @@ public final class FragileLife extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ChatGUIListener(profileManager), this);
         getServer().getPluginManager().registerEvents(new PlayerChatListener(teamManager, profileManager, reactionManager), this);
         getServer().getPluginManager().registerEvents(new GreetingGUIListener(profileManager), this);
-        getServer().getPluginManager().registerEvents(new EntityDeathListener(profileManager), this);
+        getServer().getPluginManager().registerEvents(new EntityDeathListener(profileManager, teamManager), this);
+        getServer().getPluginManager().registerEvents(new MissionGUIListener(), this);
+        getServer().getPluginManager().registerEvents(new BlockBreakListener(profileManager,teamManager), this);
 
         getCommand("chat").setExecutor(new ChatCommand(profileManager));
         getCommand("gift").setExecutor(new GiftCommand(profileManager, teamManager));
         getCommand("greetings").setExecutor(new GreetingCommand(profileManager));
+        getCommand("missions").setExecutor(new MissionCommand(profileManager,teamManager));
     }
 
     @Override

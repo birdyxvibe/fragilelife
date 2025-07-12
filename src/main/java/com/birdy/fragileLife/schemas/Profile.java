@@ -9,14 +9,15 @@ import java.util.UUID;
 public class Profile {
 
     private final UUID uuid;
+    private int soulFragments = 0;
     private String chatColor = "#FFFFFF";
     private String greeting = "PLAYER";
     private String giftCooldown = new Date().toInstant().toString();
     private boolean isChatBold = false;
     private boolean isChatItalic = false;
 
-    private Map<String, Integer> missionProgress = new HashMap<>();
-    private Map<String, String> missionCooldowns = new HashMap<>();
+    private final Map<String, Integer> missionProgress = new HashMap<>();
+    private final Map<String, String> missionCooldowns = new HashMap<>();
 
     // Add more fields here...
 
@@ -56,6 +57,10 @@ public class Profile {
     public String getMissionCooldowns(String id) { return missionCooldowns.getOrDefault(id, ""); }
 
     public void setMissionCooldowns(String id, String cd) { this.missionCooldowns.put(id,cd); }
+
+    public int getSoulFragments() { return soulFragments; }
+
+    public void setSoulFragments(int soulFragments) { this.soulFragments = soulFragments; }
 
     // Add more getter and setter functions here...
 }
