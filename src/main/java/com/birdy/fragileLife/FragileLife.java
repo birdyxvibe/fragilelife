@@ -2,7 +2,7 @@ package com.birdy.fragileLife;
 
 import com.birdy.fragileLife.chat.ChatCommand;
 import com.birdy.fragileLife.chat.ChatGUIListener;
-import com.birdy.fragileLife.chat.PlayerChatEvent;
+import com.birdy.fragileLife.listeners.PlayerChatListener;
 import com.birdy.fragileLife.commands.GiftCommand;
 import com.birdy.fragileLife.greetings.GreetingCommand;
 import com.birdy.fragileLife.greetings.GreetingGUIListener;
@@ -10,6 +10,7 @@ import com.birdy.fragileLife.listeners.EntityDeathListener;
 import com.birdy.fragileLife.listeners.PlayerDamageListener;
 import com.birdy.fragileLife.listeners.PlayerDeathListener;
 import com.birdy.fragileLife.greetings.PlayerJoinListener;
+import com.birdy.fragileLife.managers.ReactionManager;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
@@ -19,7 +20,7 @@ import com.birdy.fragileLife.managers.ProfileManager;
 
 public final class FragileLife extends JavaPlugin {
 
-    private ProfileManager profileManager;
+    ProfileManager profileManager = new ProfileManager(getDataFolder());
 
     public static final Component pluginPrefix =
             Component.text("[")
@@ -42,16 +43,17 @@ public final class FragileLife extends JavaPlugin {
         // Plugin startup logic
         getLogger().info("FragileLife has started!");
 
-        this.profileManager = new ProfileManager(getDataFolder());
-
         TeamManager teamManager = new TeamManager();
         teamManager.initializeTeams();
+
+        ReactionManager reactionManager = new ReactionManager(this);
+        reactionManager.scheduleNextReaction();
 
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(this, teamManager, profileManager), this);
         getServer().getPluginManager().registerEvents(new PlayerDamageListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerDeathListener(teamManager, profileManager), this);
         getServer().getPluginManager().registerEvents(new ChatGUIListener(profileManager), this);
-        getServer().getPluginManager().registerEvents(new PlayerChatEvent(teamManager, profileManager), this);
+        getServer().getPluginManager().registerEvents(new PlayerChatListener(teamManager, profileManager, reactionManager), this);
         getServer().getPluginManager().registerEvents(new GreetingGUIListener(profileManager), this);
         getServer().getPluginManager().registerEvents(new EntityDeathListener(profileManager), this);
 
