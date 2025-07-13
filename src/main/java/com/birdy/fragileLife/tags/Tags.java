@@ -1,9 +1,5 @@
 package com.birdy.fragileLife.tags;
 
-import com.birdy.fragileLife.chat.ChatColors;
-import net.kyori.adventure.text.format.TextColor;
-import org.bukkit.Material;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 

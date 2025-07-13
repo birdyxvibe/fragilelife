@@ -1,6 +1,5 @@
 package com.birdy.fragileLife.tags;
 
-import com.birdy.fragileLife.greetings.GreetingGUI;
 import com.birdy.fragileLife.managers.ProfileManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
