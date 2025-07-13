@@ -5,7 +5,6 @@ import com.birdy.fragileLife.managers.ProfileManager;
 import com.birdy.fragileLife.managers.TeamManager;
 import com.birdy.fragileLife.missions.types.*;
 import com.birdy.fragileLife.schemas.Profile;
-import io.papermc.paper.event.block.BlockBreakBlockEvent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
@@ -29,14 +28,17 @@ public class BlockBreakListener implements Listener {
     public void onBlockBreak(BlockBreakEvent e) {
         Player p = e.getPlayer();
         Profile profile = profileManager.getProfile(p.getUniqueId());
-        if (p.getInventory().getItemInMainHand().getType() == Material.AIR) {return;}
-        if (p.getInventory().getItemInMainHand().getItemMeta().hasEnchant(Enchantment.SILK_TOUCH)) {
+
+        ItemStack itemInHand = p.getInventory().getItemInMainHand();
+        if (itemInHand.getType() != Material.AIR && itemInHand.getItemMeta().hasEnchant(Enchantment.SILK_TOUCH)) {
             p.sendMessage(FragileLife.pluginWarningPrefix
                     .append(Component.text("Silk touch is not allowed.", NamedTextColor.GRAY)));
             p.getInventory().setItemInMainHand(new ItemStack(Material.AIR));
             p.playSound(p.getLocation(), Sound.ENTITY_ITEM_BREAK, 1.0f, 1.0f);
             e.setCancelled(true);
+            return;
         }
+
         if (e.getBlock().getType() == Material.DIAMOND_ORE || e.getBlock().getType() == Material.DEEPSLATE_DIAMOND_ORE) {
             MineDiamondsMission mineDiamondsMission = new MineDiamondsMission();
             mineDiamondsMission.trigger(profile, teamManager, p, e);
