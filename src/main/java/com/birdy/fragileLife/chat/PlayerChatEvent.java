@@ -3,12 +3,13 @@ package com.birdy.fragileLife.chat;
 import com.birdy.fragileLife.managers.ProfileManager;
 import com.birdy.fragileLife.managers.TeamManager;
 import com.birdy.fragileLife.schemas.Profile;
+import com.birdy.fragileLife.tags.Tags;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
-import net.kyori.adventure.text.format.TextDecoration;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.Player;
 
 public class PlayerChatEvent {
@@ -30,15 +31,17 @@ public class PlayerChatEvent {
 
         Profile profile = profileManager.getProfile(p.getUniqueId());
         String color = profile.getChatColor();
+        String tagID = profile.getTag();
+        String serializedTag = Tags.TAGS.get(tagID);
+        MiniMessage mm = MiniMessage.miniMessage();
+        Component tag = mm.deserialize(serializedTag);
 
-        Component chatMessage = e.message().color(TextColor.fromHexString(color))
-                .decoration(TextDecoration.BOLD, profile.isChatBold())
-                .decoration(TextDecoration.ITALIC, profile.isChatItalic());
-
-        Component message = Component.text(p.getName())
-                .color(chatColor)
-                .append(Component.text(": ")
-                        .append(chatMessage));
+        Component message = Component.text("[",NamedTextColor.GRAY)
+                .append(tag)
+                .append(Component.text("] ", NamedTextColor.GRAY))
+                .append(Component.text(p.getName(), chatColor))
+                .append(Component.text(": ", NamedTextColor.DARK_GRAY))
+                .append(e.message().color(TextColor.fromHexString(color)));
 
         e.setCancelled(true);
         for (Audience recipient : e.viewers()) {

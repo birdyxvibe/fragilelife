@@ -13,3 +13,5 @@ commands:
     description: Change your join message
   missions:
     description: View the missions GUI
+  tags:
+    description: View the TAGS GUI

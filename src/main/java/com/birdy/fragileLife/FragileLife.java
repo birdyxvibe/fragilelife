@@ -10,6 +10,8 @@ import com.birdy.fragileLife.greetings.PlayerJoinListener;
 import com.birdy.fragileLife.managers.ReactionManager;
 import com.birdy.fragileLife.missions.MissionCommand;
 import com.birdy.fragileLife.missions.MissionGUIListener;
+import com.birdy.fragileLife.tags.TagCommand;
+import com.birdy.fragileLife.tags.TagGUIListener;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
@@ -57,11 +59,13 @@ public final class FragileLife extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new EntityDeathListener(profileManager, teamManager), this);
         getServer().getPluginManager().registerEvents(new MissionGUIListener(), this);
         getServer().getPluginManager().registerEvents(new BlockBreakListener(profileManager,teamManager), this);
+        getServer().getPluginManager().registerEvents(new TagGUIListener(profileManager), this);
 
         getCommand("chat").setExecutor(new ChatCommand(profileManager));
         getCommand("gift").setExecutor(new GiftCommand(profileManager, teamManager));
         getCommand("greetings").setExecutor(new GreetingCommand(profileManager));
         getCommand("missions").setExecutor(new MissionCommand(profileManager,teamManager));
+        getCommand("tags").setExecutor(new TagCommand(profileManager));
     }
 
     @Override

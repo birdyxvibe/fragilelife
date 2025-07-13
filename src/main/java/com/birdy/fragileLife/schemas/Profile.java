@@ -12,6 +12,7 @@ public class Profile {
     private int soulFragments = 0;
     private String chatColor = "#FFFFFF";
     private String greeting = "PLAYER";
+    private String tag = "TAG";
     private String giftCooldown = new Date().toInstant().toString();
     private boolean isChatBold = false;
     private boolean isChatItalic = false;
@@ -61,6 +62,14 @@ public class Profile {
     public int getSoulFragments() { return soulFragments; }
 
     public void setSoulFragments(int soulFragments) { this.soulFragments = soulFragments; }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
 
     // Add more getter and setter functions here...
 }

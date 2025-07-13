@@ -30,8 +30,7 @@ public class BlockBreakListener implements Listener {
         Player p = e.getPlayer();
         Profile profile = profileManager.getProfile(p.getUniqueId());
         if (p.getInventory().getItemInMainHand().getType() == Material.AIR) {return;}
-        if (p.getInventory().getItemInMainHand().getItemMeta().hasEnchant(Enchantment.SILK_TOUCH))
-        {
+        if (p.getInventory().getItemInMainHand().getItemMeta().hasEnchant(Enchantment.SILK_TOUCH)) {
             p.sendMessage(FragileLife.pluginWarningPrefix
                     .append(Component.text("Silk touch is not allowed.", NamedTextColor.GRAY)));
             p.getInventory().setItemInMainHand(new ItemStack(Material.AIR));
