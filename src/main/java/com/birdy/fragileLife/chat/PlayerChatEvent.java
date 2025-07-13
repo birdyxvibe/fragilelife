@@ -9,6 +9,7 @@ import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.Player;
 
@@ -41,7 +42,7 @@ public class PlayerChatEvent {
                 .append(Component.text("] ", NamedTextColor.GRAY))
                 .append(Component.text(p.getName(), chatColor))
                 .append(Component.text(": ", NamedTextColor.DARK_GRAY))
-                .append(e.message().color(TextColor.fromHexString(color)));
+                .append(e.message().color(TextColor.fromHexString(color)).decoration(TextDecoration.BOLD, profile.isChatBold()).decoration(TextDecoration.ITALIC, profile.isChatItalic()));
 
         e.setCancelled(true);
         for (Audience recipient : e.viewers()) {
