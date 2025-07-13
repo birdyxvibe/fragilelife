@@ -8,6 +8,7 @@ import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.entity.Player;
 
 public class PlayerChatEvent {
@@ -30,10 +31,14 @@ public class PlayerChatEvent {
         Profile profile = profileManager.getProfile(p.getUniqueId());
         String color = profile.getChatColor();
 
+        Component chatMessage = e.message().color(TextColor.fromHexString(color))
+                .decoration(TextDecoration.BOLD, profile.isChatBold())
+                .decoration(TextDecoration.ITALIC, profile.isChatItalic());
+
         Component message = Component.text(p.getName())
                 .color(chatColor)
-                .append(Component.text(": "))
-                .append(e.message().color(TextColor.fromHexString(color)));
+                .append(Component.text(": ")
+                        .append(chatMessage));
 
         e.setCancelled(true);
         for (Audience recipient : e.viewers()) {

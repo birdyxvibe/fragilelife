@@ -2,12 +2,15 @@ package com.birdy.fragileLife.managers;
 
 import com.birdy.fragileLife.FragileLife;
 import com.birdy.fragileLife.reactions.Reaction;
-import com.birdy.fragileLife.reactions.TypeReaction;
+import com.birdy.fragileLife.reactions.reactionTypes.TypeReaction;
+import com.birdy.fragileLife.reactions.reactionTypes.UnscrambleReaction;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Random;
 
 public class ReactionManager {
+
+    private final Random random = new Random();
 
     private final FragileLife plugin;
     private Reaction reaction;
@@ -17,7 +20,7 @@ public class ReactionManager {
     }
 
     public void scheduleNextReaction(){
-        int delaySeconds = 240 + new Random().nextInt(121); // Generate Time From 4 to 6 Minutes (240 to 360 Seconds)
+        int delaySeconds = 31;//240 + new Random().nextInt(121); // Generate Time From 4 to 6 Minutes (240 to 360 Seconds)
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -28,9 +31,10 @@ public class ReactionManager {
     }
 
     public void StartReactionEvent(){
-        int reactRandomizer = 0; //new Random().nextInt(5);
-        if (reactRandomizer == 0){
-            reaction = new TypeReaction("Birdy");
+        int reactRandomizer = random.nextInt(2);
+        switch(reactRandomizer){
+            case 0 -> reaction = new TypeReaction(plugin);
+            case 1 -> reaction = new UnscrambleReaction(plugin);
         }
 
         new BukkitRunnable() {

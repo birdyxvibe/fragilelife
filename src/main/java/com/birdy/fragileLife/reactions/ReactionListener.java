@@ -21,7 +21,7 @@ public class ReactionListener {
 
         String plaintextMessage = PlainTextComponentSerializer.plainText().serialize(e.message());
 
-        if(plaintextMessage.equals(reaction.getAnswer())){
+        if(plaintextMessage.equalsIgnoreCase(reaction.getAnswer())){
             e.setCancelled(true);
             reaction.stop(e.getPlayer());
             return true;

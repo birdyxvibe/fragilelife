@@ -44,10 +44,10 @@ public class ChatGUI {
         // Populate GUI with Colors
         Profile profile = profileManager.getProfile(p.getUniqueId());
         TextColor selectedColor = TextColor.fromHexString(profile.getChatColor());
-        //TODO: Add Italic and Bold Options
+
         int slot = 10;
-        for(Map.Entry<String, ChatColors.ColorOption> entry : ChatColors.COLORS.entrySet()) {
-            if(slot == 17) slot += 2;
+        for (Map.Entry<String, ChatColors.ColorOption> entry : ChatColors.COLORS.entrySet()) {
+            if (slot == 17) slot += 2;
 
             ChatColors.ColorOption colorOption = entry.getValue();
             ItemStack item = new ItemStack(colorOption.material);
@@ -55,7 +55,7 @@ public class ChatGUI {
             meta.displayName(Component.text(entry.getKey(), colorOption.color).decorate(TextDecoration.BOLD));
             List<Component> lore = Arrays.stream(colorOption.lore)
                     .map(line -> Component.text(line, NamedTextColor.WHITE))
-                            .collect(Collectors.toList());
+                    .collect(Collectors.toList());
             meta.lore(lore);
 
             if (selectedColor != null && Objects.equals(selectedColor, colorOption.color)) {

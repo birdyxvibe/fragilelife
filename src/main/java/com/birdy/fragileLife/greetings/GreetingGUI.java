@@ -41,8 +41,8 @@ public class GreetingGUI {
 
         // Populate GUI with Colors
         int slot = 10;
-        for(Map.Entry<String, TextColor> entry : Greetings.GREETINGS.entrySet()) {
-            if(slot == 17) slot += 2;
+        for (Map.Entry<String, TextColor> entry : Greetings.GREETINGS.entrySet()) {
+            if (slot == 17) slot += 2;
 
             TextColor greetingColor = entry.getValue();
             ItemStack item = new ItemStack(Material.WRITABLE_BOOK);
@@ -59,7 +59,6 @@ public class GreetingGUI {
             gui.setItem(slot++, item);
         }
 
-        // Add random greeting button
         final ItemStack randomGreetingItem = new ItemStack(Material.STONE_BUTTON);
         ItemMeta randomGreetingMeta = randomGreetingItem.getItemMeta();
         randomGreetingMeta.displayName(Component.text("Random Greeting", NamedTextColor.DARK_GRAY));
