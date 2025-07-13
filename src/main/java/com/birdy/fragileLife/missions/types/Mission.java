@@ -110,9 +110,9 @@ public abstract class Mission {
     public void sendRewardMessage(Player p){
         p.sendMessage(FragileLife.pluginPrefix
                 .append(Component.text(name, NamedTextColor.AQUA))
-                .append(Component.text(" mission complete! + ", NamedTextColor.GRAY))
+                .append(Component.text(" mission complete! +", NamedTextColor.GRAY))
                 .append(Component.text(reward, NamedTextColor.DARK_RED))
-                .append(Component.text("Soul Fragment(s)", NamedTextColor.GRAY)));
+                .append(Component.text(" Soul Fragment(s)", NamedTextColor.GRAY)));
     }
 
     public String getId() { return id; }
