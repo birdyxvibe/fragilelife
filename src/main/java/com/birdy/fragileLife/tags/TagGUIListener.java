@@ -38,7 +38,7 @@ public class TagGUIListener implements Listener {
         if(clickedItem.hasItemMeta() && clickedItem.getItemMeta().hasDisplayName()){
             Component displayName = clickedItem.getItemMeta().displayName();
             if(displayName != null) {
-                String tagPlainText = PlainTextComponentSerializer.plainText().serialize(displayName);
+                String tagPlainText = PlainTextComponentSerializer.plainText().serialize(displayName).toLowerCase();
                 Profile profile = profileManager.getProfile(p.getUniqueId());
 
                 tagPlainText = tagPlainText.substring(1, tagPlainText.length() - 1);

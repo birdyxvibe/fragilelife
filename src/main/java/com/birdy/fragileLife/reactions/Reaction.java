@@ -86,7 +86,7 @@ public abstract class Reaction {
                     .append(Component.text("⚡ ", TextColor.fromHexString("#F7AA58"), TextDecoration.BOLD))
                     .append(Component.text("Reaction", TextColor.fromHexString("#F7F558"), TextDecoration.BOLD))
                     .append(Component.text(" | ", NamedTextColor.GRAY))
-                    .append(Component.text("Nobody "+actionPastTense, TextColor.fromHexString("#E96565")))
+                    .append(Component.text("Nobody "+actionPastTense+" ", TextColor.fromHexString("#E96565")))
                     .append(Component.text(answer, TextColor.fromHexString("#E91E1E")))
                     .append(Component.text(" in time!", TextColor.fromHexString("#E96565")));
         }
