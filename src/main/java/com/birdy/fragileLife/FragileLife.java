@@ -2,7 +2,6 @@ package com.birdy.fragileLife;
 
 import com.birdy.fragileLife.chat.ChatCommand;
 import com.birdy.fragileLife.chat.ChatGUIListener;
-import com.birdy.fragileLife.chat.ReactionGUIListener;
 import com.birdy.fragileLife.listeners.*;
 import com.birdy.fragileLife.commands.GiftCommand;
 import com.birdy.fragileLife.greetings.GreetingCommand;
@@ -12,6 +11,7 @@ import com.birdy.fragileLife.reactions.ReactionManager;
 import com.birdy.fragileLife.missions.MissionCommand;
 import com.birdy.fragileLife.missions.MissionGUIListener;
 import com.birdy.fragileLife.reactions.stats.ReactionCommand;
+import com.birdy.fragileLife.reactions.stats.ReactionGUIListener;
 import com.birdy.fragileLife.tags.TagCommand;
 import com.birdy.fragileLife.tags.TagGUIListener;
 import net.kyori.adventure.text.Component;
