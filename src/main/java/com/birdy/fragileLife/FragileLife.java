@@ -6,7 +6,7 @@ import com.birdy.fragileLife.listeners.*;
 import com.birdy.fragileLife.commands.GiftCommand;
 import com.birdy.fragileLife.greetings.GreetingCommand;
 import com.birdy.fragileLife.greetings.GreetingGUIListener;
-import com.birdy.fragileLife.greetings.PlayerJoinListener;
+import com.birdy.fragileLife.listeners.PlayerJoinListener;
 import com.birdy.fragileLife.managers.ReactionManager;
 import com.birdy.fragileLife.missions.MissionCommand;
 import com.birdy.fragileLife.missions.MissionGUIListener;

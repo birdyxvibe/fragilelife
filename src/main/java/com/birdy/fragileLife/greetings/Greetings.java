@@ -22,7 +22,7 @@ public class Greetings {
         GREETINGS.put("PLAYER...Heart loss imminent.",TextColor.fromHexString("#ff0000"));
         GREETINGS.put("PLAYER arrived. The heart economy is crashing.",TextColor.fromHexString("#e15d8d"));
         GREETINGS.put("PLAYER the heart tax collector has arrived.",TextColor.fromHexString("#5f50ff"));
-        GREETINGS.put("PLAYER rolled up",TextColor.fromHexString("#DDE169"));
-        GREETINGS.put("PLAYER rolled up",TextColor.fromHexString("#DDE169"));
+        GREETINGS.put("Cover your assholes, PLAYER is here",TextColor.fromHexString("#e1a2ae"));
+        GREETINGS.put("PLAYER is here to steal your reactions.",TextColor.fromHexString("#e19826"));
     }
 }
