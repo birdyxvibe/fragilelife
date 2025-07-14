@@ -123,7 +123,7 @@ public class ReactionGUI {
         List<Component> lore = new ArrayList<>();
         double fastestTime = reactionManager.getUserStats(p.getUniqueId(), timeframe, type).fastestTime();
         lore.add(Component.text("* ", bulletColor).decoration(TextDecoration.ITALIC, false)
-                .append(Component.text((type == null ? "Overall" : type) + " Reaction Win: ", NamedTextColor.GRAY)).decoration(TextDecoration.ITALIC, false)
+                .append(Component.text((type == null ? "Overall" : type) + " Reaction Wins: ", NamedTextColor.GRAY)).decoration(TextDecoration.ITALIC, false)
                 .append(Component.text(reactionManager.getUserStats(p.getUniqueId(), timeframe, type).totalWins(), NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false)));
         lore.add(Component.text("* ", bulletColor).decoration(TextDecoration.ITALIC, false)
                 .append(Component.text("Fastest "+ (type == null ? "Overall" : type) +" Reaction Win: ", NamedTextColor.GRAY)).decoration(TextDecoration.ITALIC, false)
