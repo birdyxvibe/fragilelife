@@ -25,16 +25,16 @@ public abstract class Mission {
         this.id = id;
         this.name = name;
         this.desc = desc;
-        this.reward =reward;
+        this.reward = reward;
         this.cooldownDuration = cooldownDuration;
         this.guiMaterial = guiMaterial;
         this.isRedOnly = isRedOnly;
     }
 
-    public void trigger(Profile profile, TeamManager teamManager, Player player, Object context) {
+    public void trigger(Profile profile, TeamManager teamManager, Player player) {
         if (player == null) return;
         if (teamManager.getPlayerTeamColor(player) == NamedTextColor.GRAY) return;
-        if (isRedOnly() && isRedTeam(teamManager, player)) return;
+        if (isRedOnly() && teamManager.getPlayerTeamColor(player) != NamedTextColor.RED) return;
         if (isOnCooldown(profile)) return;
 
         int progress = getProgress(profile);
@@ -53,8 +53,8 @@ public abstract class Mission {
     public boolean isOnCooldown(Profile profile) {
         String cooldownStr = profile.getMissionCooldowns(id);
         if (cooldownStr.isEmpty()) return false;
-        long expiresAt = Instant.parse(cooldownStr).toEpochMilli();
-        return System.currentTimeMillis() < expiresAt;
+        Instant expiresAt = Instant.parse(cooldownStr);
+        return Instant.now().isBefore(expiresAt);
     }
 
     public void startCooldown(Profile profile) {
@@ -101,10 +101,6 @@ public abstract class Mission {
 
     public void resetProgress(Profile profile) {
         profile.setMissionProgress(id, 0);
-    }
-
-    public boolean isRedTeam(TeamManager teamManager, Player p) {
-        return (teamManager.getPlayerTeamColor(p) == NamedTextColor.RED);
     }
 
     public void sendRewardMessage(Player p){

@@ -41,13 +41,13 @@ public class BlockBreakListener implements Listener {
 
         if (e.getBlock().getType() == Material.DIAMOND_ORE || e.getBlock().getType() == Material.DEEPSLATE_DIAMOND_ORE) {
             MineDiamondsMission mineDiamondsMission = new MineDiamondsMission();
-            mineDiamondsMission.trigger(profile, teamManager, p, e);
+            mineDiamondsMission.trigger(profile, teamManager, p);
         } else if (e.getBlock().getType() == Material.IRON_ORE || e.getBlock().getType() == Material.DEEPSLATE_IRON_ORE) {
             MineIronMission mineIronMission = new MineIronMission();
-            mineIronMission.trigger(profile, teamManager, p, e);
+            mineIronMission.trigger(profile, teamManager, p);
         } else if (e.getBlock().getType() == Material.EMERALD_ORE || e.getBlock().getType() == Material.DEEPSLATE_EMERALD_ORE) {
             MineEmeraldMission mineEmeraldMission = new MineEmeraldMission();
-            mineEmeraldMission.trigger(profile, teamManager, p, e);
+            mineEmeraldMission.trigger(profile, teamManager, p);
         }
     }
 }

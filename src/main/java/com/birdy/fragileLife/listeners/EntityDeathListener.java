@@ -30,13 +30,13 @@ public class EntityDeathListener implements Listener {
             Profile profile = profileManager.getProfile(killer.getUniqueId());
             KillMonstersMission killMonstersMission = new KillMonstersMission();
 
-            killMonstersMission.trigger(profile, teamManager,  killer, e);
+            killMonstersMission.trigger(profile, teamManager,  killer);
         } else if (e.getEntity() instanceof Animals) {
             Player killer = e.getEntity().getKiller();
             Profile profile = profileManager.getProfile(killer.getUniqueId());
             KillAnimalsMission killAnimalsMission = new KillAnimalsMission();
 
-            killAnimalsMission.trigger(profile, teamManager,  killer, e);
+            killAnimalsMission.trigger(profile, teamManager,  killer);
         }
     }
 }

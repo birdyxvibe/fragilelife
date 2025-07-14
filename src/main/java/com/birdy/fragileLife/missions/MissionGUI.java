@@ -55,7 +55,7 @@ public class MissionGUI {
             if(slot == 17) slot += 2;
 
             // Lock red team missions from non-red team players
-            if (!m.isRedTeam(teamManager, p) && m.isRedOnly()) {
+            if (teamManager.getPlayerTeamColor(p) != NamedTextColor.RED && m.isRedOnly()) {
                 ItemStack item = new ItemStack(Material.BARRIER);
                 ItemMeta meta = item.getItemMeta();
                 meta.displayName(Component.text("Locked", NamedTextColor.RED, TextDecoration.BOLD));
@@ -77,7 +77,6 @@ public class MissionGUI {
             meta.displayName(gradientText);
 
             // Build Lore
-            String cooldown = m.getCooldown(profile);
             List<Component> lore = new ArrayList<>();
             lore.add(Component.text("Complete missions to gain soul fragments", NamedTextColor.GRAY));
             lore.add(Component.text("that can be spent in /shop", NamedTextColor.GRAY));
@@ -95,7 +94,8 @@ public class MissionGUI {
                     .append(Component.text(" Soul Fragment(s)", NamedTextColor.WHITE)));
 
 
-            if (!cooldown.isEmpty()) {
+            String cooldown = m.getCooldown(profile);
+            if (!cooldown.isEmpty() && !cooldown.equals("now")) {
                 lore.add(Component.empty());
                 lore.add(Component.text("✖", NamedTextColor.RED)
                         .append(Component.text(" Cooldown: ", NamedTextColor.GRAY))

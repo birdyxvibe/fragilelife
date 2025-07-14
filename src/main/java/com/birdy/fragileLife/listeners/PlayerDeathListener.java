@@ -28,7 +28,6 @@ public class PlayerDeathListener implements Listener {
         Player p = e.getEntity();
         String currentTeam = teamManager.getPlayerTeam(p).getName();
 
-
         switch (currentTeam.toLowerCase()) {
             case "green" -> {
                 teamManager.assignPlayerToTeam(p, "yellow");
@@ -53,6 +52,6 @@ public class PlayerDeathListener implements Listener {
         Player killer = e.getEntity().getKiller();
         Profile profile = profileManager.getProfile(killer.getUniqueId());
         KillPlayersMission killPlayersMission = new KillPlayersMission();
-        killPlayersMission.trigger(profile,teamManager, killer, e);
+        killPlayersMission.trigger(profile,teamManager, killer);
     }
 }
