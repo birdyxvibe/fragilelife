@@ -43,9 +43,9 @@ public class ReactionGUI {
         for(int i = 0; i < GUI_SIZE; i++) gui.setItem(i, fillerItem1);
 
         ItemStack fillerItem2 = new ItemStack(Material.IRON_BARS);
-        ItemMeta meta2 = fillerItem1.getItemMeta();
+        ItemMeta meta2 = fillerItem2.getItemMeta();
         meta2.displayName(Component.empty());
-        fillerItem1.setItemMeta(meta2);
+        fillerItem2.setItemMeta(meta2);
         gui.setItem(11, fillerItem2);
         gui.setItem(20, fillerItem2);
 
@@ -75,6 +75,14 @@ public class ReactionGUI {
                 speedItem = Material.DIAMOND;
             }
         }
+
+        String timeReadable = switch (timeframe) {
+            case "month" -> "(This Month)";
+            case "week" -> "(This Week)";
+            case "day" -> "(Today)";
+            default -> "(All-Time)";
+        };
+
         ItemStack changeType = new ItemStack(Material.COMPASS);
         ItemMeta typeItemMeta = changeType.getItemMeta();
         typeItemMeta.displayName(Component.text("Change Reaction Type", TextColor.fromHexString("#6986CE"), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false));
@@ -110,7 +118,8 @@ public class ReactionGUI {
         ItemStack playerStats = new ItemStack(Material.PLAYER_HEAD);
         SkullMeta playerStatsMeta = (SkullMeta) playerStats.getItemMeta();
         playerStatsMeta.setOwningPlayer(p);
-        playerStatsMeta.displayName(MiniMessage.miniMessage().deserialize("<bold><underlined><gradient:#FF5F6D:#FFC371>Your Reaction Statistics</gradient></underlined></bold>").decoration(TextDecoration.ITALIC, false));
+        playerStatsMeta.displayName(MiniMessage.miniMessage().deserialize("<gradient:#FF5F6D:#FFC371>Your " + (type == null ? "Overall" : type) + " Reaction Statistics </gradient>").decoration(TextDecoration.BOLD, true).decoration(TextDecoration.ITALIC, false)
+                .append((Component.text(timeReadable, NamedTextColor.DARK_GRAY, TextDecoration.ITALIC)).decoration(TextDecoration.BOLD, false)));
         List<Component> lore = new ArrayList<>();
         double fastestTime = reactionManager.getUserStats(p.getUniqueId(), timeframe, type).fastestTime();
         lore.add(Component.text("* ", bulletColor).decoration(TextDecoration.ITALIC, false)
@@ -125,7 +134,8 @@ public class ReactionGUI {
 
         ItemStack winsLeaderboard = new ItemStack(winsItem);
         ItemMeta winsMeta = winsLeaderboard.getItemMeta();
-        winsMeta.displayName(MiniMessage.miniMessage().deserialize("<bold><gradient:#36D1DC:#5B86E5>Top " + (type == null ? "Overall" : type) + " Winners</gradient></bold>").decoration(TextDecoration.ITALIC, false));
+        winsMeta.displayName(MiniMessage.miniMessage().deserialize("<gradient:#36D1DC:#5B86E5>Top " + (type == null ? "Overall" : type) + " Winners </gradient>").decoration(TextDecoration.BOLD, true).decoration(TextDecoration.ITALIC, false)
+        .append((Component.text(timeReadable, NamedTextColor.DARK_GRAY, TextDecoration.ITALIC)).decoration(TextDecoration.BOLD, false)));
         List<Component> winsLore = new ArrayList<>();
         List<Map.Entry<UUID, Long>> top10Wins = reactionManager.getTopWins(timeframe, type);
         if(top10Wins.isEmpty()) winsLore.add(Component.text("Nobody has won a reaction yet...", NamedTextColor.GRAY));
@@ -156,7 +166,8 @@ public class ReactionGUI {
 
         ItemStack speedLeaderboard = new ItemStack(speedItem);
         ItemMeta speedMeta = speedLeaderboard.getItemMeta();
-        speedMeta.displayName(MiniMessage.miniMessage().deserialize("<bold><gradient:#F7971E:#FFD200>Fastest " + (type == null ? "Overall" : type) + " Winners</gradient></bold>").decoration(TextDecoration.ITALIC, false));
+        speedMeta.displayName(MiniMessage.miniMessage().deserialize("<gradient:#F7971E:#FFD200>Fastest " + (type == null ? "Overall" : type) + " Winners </gradient>").decoration(TextDecoration.BOLD, true).decoration(TextDecoration.ITALIC, false)
+                .append((Component.text(timeReadable, NamedTextColor.DARK_GRAY, TextDecoration.ITALIC)).decoration(TextDecoration.BOLD, false)));
         List<Component> speedLore = new ArrayList<>();
         List<React> top10Speed = reactionManager.getTopSpeeds(timeframe, type);
         int num2 = 1;

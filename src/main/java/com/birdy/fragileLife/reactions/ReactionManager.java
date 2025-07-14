@@ -52,7 +52,7 @@ public class ReactionManager {
     }
 
     public void scheduleNextReaction(){
-        int delaySeconds = 31;//240 + new Random().nextInt(121); // Generate Time From 4 to 6 Minutes (240 to 360 Seconds)
+        int delaySeconds = 420 + new Random().nextInt(360); // Generate Time From 7 to 11 Minutes (420 to 780 Seconds)
         new BukkitRunnable() {
             @Override
             public void run() {
