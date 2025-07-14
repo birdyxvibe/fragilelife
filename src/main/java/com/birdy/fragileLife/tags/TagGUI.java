@@ -4,6 +4,8 @@ import com.birdy.fragileLife.managers.ProfileManager;
 import com.birdy.fragileLife.schemas.Profile;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -14,6 +16,8 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class TagGUI {
@@ -38,7 +42,7 @@ public class TagGUI {
         Profile profile = profileManager.getProfile(p.getUniqueId());
         String selectedTag = profile.getTag();
 
-        // Populate GUI with Colors
+        // Populate GUI with Tags
         int slot = 10;
         for(Map.Entry<String, String> entry : Tags.TAGS.entrySet()) {
             if(slot == 17) slot += 2;
@@ -59,6 +63,16 @@ public class TagGUI {
             item.setItemMeta(meta);
             gui.setItem(slot++, item);
         }
+
+        ItemStack removeTag = new ItemStack(Material.BARRIER);
+        ItemMeta removeTagMeta = removeTag.getItemMeta();
+        removeTagMeta.displayName(Component.text("Remove Tag", TextColor.fromHexString("#ed211f"), TextDecoration.BOLD).decoration(TextDecoration.ITALIC, false));
+        List<Component> removeTagLore = new ArrayList<>();
+        removeTagLore.add(Component.text("Select to remove your tag.", NamedTextColor.DARK_GRAY));
+        removeTagMeta.lore(removeTagLore);
+        removeTag.setItemMeta(removeTagMeta);
+        gui.setItem(31, removeTag);
+
         p.openInventory(gui);
     }
 

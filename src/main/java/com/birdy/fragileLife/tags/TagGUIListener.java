@@ -38,22 +38,29 @@ public class TagGUIListener implements Listener {
                 String tagPlainText = PlainTextComponentSerializer.plainText().serialize(displayName).toLowerCase();
                 Profile profile = profileManager.getProfile(p.getUniqueId());
 
-                tagPlainText = tagPlainText.substring(1, tagPlainText.length() - 1);
+                if(tagPlainText.equalsIgnoreCase("Remove Tag")){
+                    profile.setTag("NONE");
+                    p.sendMessage(FragileLife.pluginPrefix
+                            .append(Component.text("You've removed your tag.", NamedTextColor.GRAY)));
+                } else {
+                    tagPlainText = tagPlainText.substring(1, tagPlainText.length() - 1);
 
-                String serializedTag = Tags.TAGS.get(tagPlainText);
-                MiniMessage mm = MiniMessage.miniMessage();
-                Component tag = mm.deserialize(serializedTag);
-                profile.setTag(tagPlainText);
+                    String serializedTag = Tags.TAGS.get(tagPlainText);
+                    MiniMessage mm = MiniMessage.miniMessage();
+                    Component tag = mm.deserialize(serializedTag);
+                    profile.setTag(tagPlainText);
 
-                // Refresh inventory for to highlight newly selected greeting
+                    p.sendMessage(FragileLife.pluginPrefix
+                            .append(Component.text("You've changed your tag to ", NamedTextColor.GRAY))
+                            .append(Component.text("[", NamedTextColor.GRAY))
+                            .append(tag)
+                            .append(Component.text("]", NamedTextColor.GRAY)));
+                }
+
+                // Refresh inventory for to highlight newly selected tag
                 p.closeInventory();
                 TagGUI.open(p, profileManager);
 
-                p.sendMessage(FragileLife.pluginPrefix
-                        .append(Component.text("You've changed your tag to ", NamedTextColor.GRAY))
-                        .append(Component.text("[", NamedTextColor.GRAY))
-                        .append(tag)
-                        .append(Component.text("]", NamedTextColor.GRAY)));
             }
         }
     }
