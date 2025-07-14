@@ -12,7 +12,7 @@ public class Profile {
     private int soulFragments = 0;
     private String chatColor = "#FFFFFF";
     private String greeting = "PLAYER";
-    private String tag = "TAG";
+    private String tag = "NONE";
     private String giftCooldown = new Date().toInstant().toString();
     private boolean isChatBold = false;
     private boolean isChatItalic = false;

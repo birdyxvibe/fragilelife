@@ -32,14 +32,16 @@ public class PlayerChatEvent {
 
         Profile profile = profileManager.getProfile(p.getUniqueId());
         String color = profile.getChatColor();
-        String tagID = profile.getTag();
-        String serializedTag = Tags.TAGS.get(tagID);
-        MiniMessage mm = MiniMessage.miniMessage();
-        Component tag = mm.deserialize(serializedTag);
+        Component chatTag = Component.empty();
+        if(!profile.getTag().equals("NONE")) {
+            String tagID = profile.getTag();
+            String serializedTag = Tags.TAGS.get(tagID);
+            MiniMessage mm = MiniMessage.miniMessage();
+            Component tag = mm.deserialize(serializedTag);
+            chatTag = Component.text("[",NamedTextColor.GRAY).append(tag).append(Component.text("] ", NamedTextColor.GRAY));
+        }
 
-        Component message = Component.text("[",NamedTextColor.GRAY)
-                .append(tag)
-                .append(Component.text("] ", NamedTextColor.GRAY))
+        Component message = chatTag
                 .append(Component.text(p.getName(), chatColor))
                 .append(Component.text(": ", NamedTextColor.DARK_GRAY))
                 .append(e.message().color(TextColor.fromHexString(color)).decoration(TextDecoration.BOLD, profile.isChatBold()).decoration(TextDecoration.ITALIC, profile.isChatItalic()));
