@@ -2,6 +2,7 @@ package com.birdy.fragileLife.reactions;
 
 import com.birdy.fragileLife.FragileLife;
 import com.birdy.fragileLife.reactions.reactionData.ReactionPrizes;
+import com.birdy.fragileLife.schemas.React;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
@@ -17,20 +18,25 @@ import java.util.Map;
 
 public abstract class Reaction {
     private final FragileLife plugin;
+    private final ReactionManager reactionManager;
+
     protected boolean active;
     protected final String answer;
     protected final String text;
     protected Instant sentTimestamp;
     protected final String action;
     protected final String actionPastTense;
+    protected final ReactionType type;
 
-    public Reaction(FragileLife plugin, String[] answerText, String action, String actionPastTense) {
+    public Reaction(FragileLife plugin, ReactionManager reactionManager, String[] answerText, String action, String actionPastTense, ReactionType type) {
         this.plugin = plugin;
+        this.reactionManager = reactionManager;
         this.answer = answerText[0];
         this.text = answerText[1];
         this.active = true;
         this.action = action;
         this.actionPastTense = actionPastTense;
+        this.type = type;
         this.start();
     }
 
@@ -74,13 +80,15 @@ public abstract class Reaction {
                     .append(Component.text("⚡ ", TextColor.fromHexString("#F7AA58"), TextDecoration.BOLD))
                     .append(Component.text("Reaction", TextColor.fromHexString("#F7F558"), TextDecoration.BOLD))
                     .append(Component.text(" | ", NamedTextColor.GRAY))
-                    .append(Component.text(winner.getName(), TextColor.fromHexString("#76FFE7")))
-                    .append(Component.text(" "+actionPastTense+" ", TextColor.fromHexString("#00C5E9")))
-                    .append(Component.text(answer, TextColor.fromHexString("#76FFE7")))
-                    .append(Component.text(" in ", TextColor.fromHexString("#00C5E9")))
-                    .append(Component.text(formattedTime, TextColor.fromHexString("#FFFFFF")))
-                    .append(Component.text(" seconds and won ", TextColor.fromHexString("#00C5E9")))
-                    .append(Component.text(prize + "!", TextColor.fromHexString("#76FFE7")));
+                    .append(Component.text(winner.getName(), TextColor.fromHexString("#86FF99")))
+                    .append(Component.text(" "+actionPastTense+" ", TextColor.fromHexString("#36d736")))
+                    .append(Component.text(answer, TextColor.fromHexString("#86FF99")))
+                    .append(Component.text(" in ", TextColor.fromHexString("#36d736")))
+                    .append(Component.text(formattedTime, TextColor.fromHexString("#86FF99")))
+                    .append(Component.text(" seconds and won ", TextColor.fromHexString("#36d736")))
+                    .append(Component.text(prize + "!", TextColor.fromHexString("#86FF99")));
+
+            reactionManager.addReaction(new React(winner.getUniqueId(), Double.parseDouble(formattedTime), Instant.now().toString(), type));
         } else {
             reactionMessage = Component.empty()
                     .append(Component.text("⚡ ", TextColor.fromHexString("#F7AA58"), TextDecoration.BOLD))

@@ -15,3 +15,5 @@ commands:
     description: View the missions GUI
   tags:
     description: View the TAGS GUI
+  reaction:
+    description: View Reaction Stats

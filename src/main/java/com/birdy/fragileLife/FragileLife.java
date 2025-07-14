@@ -2,14 +2,16 @@ package com.birdy.fragileLife;
 
 import com.birdy.fragileLife.chat.ChatCommand;
 import com.birdy.fragileLife.chat.ChatGUIListener;
+import com.birdy.fragileLife.chat.ReactionGUIListener;
 import com.birdy.fragileLife.listeners.*;
 import com.birdy.fragileLife.commands.GiftCommand;
 import com.birdy.fragileLife.greetings.GreetingCommand;
 import com.birdy.fragileLife.greetings.GreetingGUIListener;
 import com.birdy.fragileLife.listeners.PlayerJoinListener;
-import com.birdy.fragileLife.managers.ReactionManager;
+import com.birdy.fragileLife.reactions.ReactionManager;
 import com.birdy.fragileLife.missions.MissionCommand;
 import com.birdy.fragileLife.missions.MissionGUIListener;
+import com.birdy.fragileLife.reactions.stats.ReactionCommand;
 import com.birdy.fragileLife.tags.TagCommand;
 import com.birdy.fragileLife.tags.TagGUIListener;
 import net.kyori.adventure.text.Component;
@@ -22,6 +24,7 @@ import com.birdy.fragileLife.managers.ProfileManager;
 public final class FragileLife extends JavaPlugin {
 
     ProfileManager profileManager = new ProfileManager(getDataFolder());
+    ReactionManager reactionManager = new ReactionManager(this, getDataFolder());
 
     public static final Component pluginPrefix =
             Component.text("[")
@@ -47,7 +50,6 @@ public final class FragileLife extends JavaPlugin {
         TeamManager teamManager = new TeamManager();
         teamManager.initializeTeams();
 
-        ReactionManager reactionManager = new ReactionManager(this);
         reactionManager.scheduleNextReaction();
 
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(this, teamManager, profileManager), this);
@@ -60,18 +62,23 @@ public final class FragileLife extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new MissionGUIListener(), this);
         getServer().getPluginManager().registerEvents(new BlockBreakListener(profileManager,teamManager), this);
         getServer().getPluginManager().registerEvents(new TagGUIListener(profileManager), this);
+        getServer().getPluginManager().registerEvents(new ReactionGUIListener(reactionManager), this);
 
         getCommand("chat").setExecutor(new ChatCommand(profileManager));
         getCommand("gift").setExecutor(new GiftCommand(profileManager, teamManager));
         getCommand("greetings").setExecutor(new GreetingCommand(profileManager));
         getCommand("missions").setExecutor(new MissionCommand(profileManager,teamManager));
         getCommand("tags").setExecutor(new TagCommand(profileManager));
+        getCommand("reaction").setExecutor(new ReactionCommand(reactionManager));
     }
 
     @Override
     public void onDisable() {
         if(profileManager != null){
             profileManager.saveAll();
+        }
+        if(reactionManager != null){
+            reactionManager.saveAll();
         }
         getLogger().info("FragileLife has stopped.");
     }

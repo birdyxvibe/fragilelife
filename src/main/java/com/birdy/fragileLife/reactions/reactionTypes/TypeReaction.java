@@ -2,6 +2,8 @@ package com.birdy.fragileLife.reactions.reactionTypes;
 
 import com.birdy.fragileLife.FragileLife;
 import com.birdy.fragileLife.reactions.Reaction;
+import com.birdy.fragileLife.reactions.ReactionManager;
+import com.birdy.fragileLife.reactions.ReactionType;
 import com.birdy.fragileLife.reactions.reactionData.ReactionWords;
 
 import java.util.List;
@@ -9,8 +11,8 @@ import java.util.Random;
 
 public class TypeReaction extends Reaction {
 
-    public TypeReaction(FragileLife plugin) {
-        super(plugin, generateAnswer(), "Type the word", "typed the word");
+    public TypeReaction(FragileLife plugin, ReactionManager reactionManager) {
+        super(plugin, reactionManager, generateAnswer(), "Type the word", "typed the word", ReactionType.WORD);
     }
 
     private static String[] generateAnswer() {

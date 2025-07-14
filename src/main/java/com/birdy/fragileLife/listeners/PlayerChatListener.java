@@ -2,7 +2,7 @@ package com.birdy.fragileLife.listeners;
 
 import com.birdy.fragileLife.chat.PlayerChatEvent;
 import com.birdy.fragileLife.managers.ProfileManager;
-import com.birdy.fragileLife.managers.ReactionManager;
+import com.birdy.fragileLife.reactions.ReactionManager;
 import com.birdy.fragileLife.managers.TeamManager;
 import com.birdy.fragileLife.reactions.ReactionListener;
 import io.papermc.paper.event.player.AsyncChatEvent;
@@ -24,7 +24,7 @@ public class PlayerChatListener implements Listener {
     @EventHandler
     public void onPlayerChat(AsyncChatEvent e){
 
-        ReactionListener reactionListener = new ReactionListener(e, reactionManager);
+        ReactionListener reactionListener = new ReactionListener(e, reactionManager, teamManager);
         boolean reactionSuccess = reactionListener.reactionListener();
 
         if(reactionSuccess) return;
