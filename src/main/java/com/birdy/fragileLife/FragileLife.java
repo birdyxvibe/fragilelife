@@ -29,9 +29,9 @@ public final class FragileLife extends JavaPlugin {
 
     public static final List<Location> placedMissionBlockLocations = new ArrayList<>();
 
-    ProfileManager profileManager = new ProfileManager(getDataFolder());
+    ProfileManager profileManager;
     TeamManager teamManager;
-    ReactionManager reactionManager = new ReactionManager(this, profileManager, teamManager, getDataFolder());
+    ReactionManager reactionManager;
 
     public static final Component pluginPrefix =
             Component.text("[")
@@ -54,9 +54,12 @@ public final class FragileLife extends JavaPlugin {
         // Plugin startup logic
         getLogger().info("FragileLife has started!");
 
+        profileManager = new ProfileManager(getDataFolder());
+
         teamManager =  new TeamManager();
         teamManager.initializeTeams();
 
+        reactionManager = new ReactionManager(this, profileManager, teamManager, getDataFolder());
         reactionManager.scheduleNextReaction();
 
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(this, teamManager, profileManager), this);
