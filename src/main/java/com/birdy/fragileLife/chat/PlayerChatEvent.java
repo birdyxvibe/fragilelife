@@ -12,7 +12,6 @@ import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.Player;
-
 public class PlayerChatEvent {
 
     private final AsyncChatEvent e;
@@ -32,6 +31,7 @@ public class PlayerChatEvent {
 
         Profile profile = profileManager.getProfile(p.getUniqueId());
         String color = profile.getChatColor();
+
         Component chatTag = Component.empty();
         if(!profile.getTag().equals("NONE")) {
             String tagID = profile.getTag();
@@ -41,9 +41,15 @@ public class PlayerChatEvent {
             chatTag = Component.text("[",NamedTextColor.GRAY).append(tag).append(Component.text("] ", NamedTextColor.GRAY));
         }
 
+        Component playerName = Component.text(p.getName(), chatColor);
+        if(!profile.getNickname().equals("off")){
+            playerName = (Component.text("*", NamedTextColor.WHITE))
+                            .append(Component.text(profile.getNickname(), chatColor));
+        }
+
         Component message = chatTag
-                .append(Component.text(p.getName(), chatColor))
-                .append(Component.text(": ", NamedTextColor.DARK_GRAY))
+                .append(playerName)
+                .append(Component.text(": ", NamedTextColor.WHITE))
                 .append(e.message().color(TextColor.fromHexString(color)).decoration(TextDecoration.BOLD, profile.isChatBold()).decoration(TextDecoration.ITALIC, profile.isChatItalic()));
 
         e.setCancelled(true);

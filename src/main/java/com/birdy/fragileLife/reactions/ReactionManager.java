@@ -1,7 +1,10 @@
 package com.birdy.fragileLife.reactions;
 
 import com.birdy.fragileLife.FragileLife;
+import com.birdy.fragileLife.managers.ProfileManager;
+import com.birdy.fragileLife.managers.TeamManager;
 import com.birdy.fragileLife.reactions.reactionTypes.MathReaction;
+import com.birdy.fragileLife.reactions.reactionTypes.Reaction;
 import com.birdy.fragileLife.reactions.reactionTypes.TypeReaction;
 import com.birdy.fragileLife.reactions.reactionTypes.UnscrambleReaction;
 import com.birdy.fragileLife.reactions.stats.UserReactionStats;
@@ -31,14 +34,20 @@ public class ReactionManager {
     private final Random random = new Random();
 
     private final FragileLife plugin;
+    private final ProfileManager profileManager;
+    private final TeamManager teamManager;
+
     private final File file;
     private final FileConfiguration config;
 
     private Reaction reaction;
 
     //Constructor
-    public ReactionManager(FragileLife plugin, File dataFolder){
+    public ReactionManager(FragileLife plugin, ProfileManager profileManager, TeamManager teamManager, File dataFolder){
         this.plugin = plugin;
+        this.profileManager = profileManager;
+        this.teamManager = teamManager;
+
         this.file = new File(dataFolder, "reactions.yml");
         if(!file.exists()) {
             try {
@@ -52,7 +61,7 @@ public class ReactionManager {
     }
 
     public void scheduleNextReaction(){
-        int delaySeconds = 420 + new Random().nextInt(360); // Generate Time From 7 to 11 Minutes (420 to 780 Seconds)
+        int delaySeconds = 31;//420 + new Random().nextInt(360); // Generate Time From 7 to 11 Minutes (420 to 780 Seconds)
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -65,9 +74,9 @@ public class ReactionManager {
     public void StartReactionEvent(){
         int reactRandomizer = random.nextInt(3);
         switch(reactRandomizer){
-            case 0 -> reaction = new TypeReaction(plugin, this);
-            case 1 -> reaction = new UnscrambleReaction(plugin, this);
-            case 2 -> reaction = new MathReaction(plugin, this);
+            case 0 -> reaction = new TypeReaction(plugin, profileManager, teamManager, this);
+            case 1 -> reaction = new UnscrambleReaction(plugin, profileManager, teamManager, this);
+            case 2 -> reaction = new MathReaction(plugin, profileManager, teamManager, this);
         }
 
         new BukkitRunnable() {

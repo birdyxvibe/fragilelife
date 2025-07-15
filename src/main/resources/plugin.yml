@@ -17,3 +17,7 @@ commands:
     description: View the TAGS GUI
   reaction:
     description: View Reaction Stats
+  nick:
+    description: Change your nickname
+    aliases:
+      - nickname

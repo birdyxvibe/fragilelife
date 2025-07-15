@@ -1,34 +1,31 @@
 package com.birdy.fragileLife.missions.types;
 
-import com.birdy.fragileLife.managers.TeamManager;
 import com.birdy.fragileLife.schemas.Profile;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 
 import java.time.Duration;
 
-public class MineEmeraldMission extends Mission {
+public class CatchFishMission extends Mission {
 
-    private final int targetBlocks;
+    private final int targetCatches;
 
-    public MineEmeraldMission() {
-        super("mine_emerald", "Lucky Miner","Mine 2 Emerald Ore",
-                2, Duration.ofHours(24), Material.EMERALD, false);
-        this.targetBlocks = 2;
+    public CatchFishMission() {
+        super("catch_fish", "Fisherman","Catch 25 Fish",
+                2, Duration.ofHours(24), Material.FISHING_ROD, false);
+        this.targetCatches = 25;
     }
 
     @Override
     public boolean isComplete(Profile profile) {
-        return getProgress(profile) >= targetBlocks;
+        return getProgress(profile) >= targetCatches;
     }
 
     @Override
     public Component getProgressComponent(Profile profile) {
         return Component.text(getProgress(profile), NamedTextColor.WHITE)
                 .append(Component.text("/", NamedTextColor.WHITE))
-                .append(Component.text(targetBlocks, NamedTextColor.WHITE));
+                .append(Component.text(targetCatches, NamedTextColor.WHITE));
     }
-
 }

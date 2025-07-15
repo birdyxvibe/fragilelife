@@ -11,6 +11,7 @@ public class Profile {
     private final UUID uuid;
     private int soulFragments = 0;
     private String chatColor = "#FFFFFF";
+    private String nickname = "off";
     private String greeting = "PLAYER";
     private String tag = "NONE";
     private String giftCooldown = new Date().toInstant().toString();
@@ -70,6 +71,9 @@ public class Profile {
     public void setTag(String tag) {
         this.tag = tag;
     }
+
+    public String getNickname() { return nickname; }
+    public void setNickname(String nickname) { this.nickname = nickname; }
 
     // Add more getter and setter functions here...
 }

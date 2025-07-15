@@ -31,14 +31,14 @@ public abstract class Mission {
         this.isRedOnly = isRedOnly;
     }
 
-    public void trigger(Profile profile, TeamManager teamManager, Player player) {
+    public void trigger(Profile profile, TeamManager teamManager, Player player, int increment) {
         if (player == null) return;
         if (teamManager.getPlayerTeamColor(player) == NamedTextColor.GRAY) return;
         if (isRedOnly() && teamManager.getPlayerTeamColor(player) != NamedTextColor.RED) return;
         if (isOnCooldown(profile)) return;
 
         int progress = getProgress(profile);
-        setProgress(profile, progress + 1);
+        setProgress(profile, progress + increment);
 
         if (isComplete(profile)) {
             // Give reward

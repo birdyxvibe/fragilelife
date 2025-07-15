@@ -52,6 +52,6 @@ public class PlayerDeathListener implements Listener {
         Player killer = e.getEntity().getKiller();
         Profile profile = profileManager.getProfile(killer.getUniqueId());
         KillPlayersMission killPlayersMission = new KillPlayersMission();
-        killPlayersMission.trigger(profile,teamManager, killer);
+        killPlayersMission.trigger(profile,teamManager, killer, 1);
     }
 }

@@ -2,6 +2,7 @@ package com.birdy.fragileLife;
 
 import com.birdy.fragileLife.chat.ChatCommand;
 import com.birdy.fragileLife.chat.ChatGUIListener;
+import com.birdy.fragileLife.chat.NickCommand;
 import com.birdy.fragileLife.listeners.*;
 import com.birdy.fragileLife.commands.GiftCommand;
 import com.birdy.fragileLife.greetings.GreetingCommand;
@@ -17,14 +18,20 @@ import com.birdy.fragileLife.tags.TagGUIListener;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
+import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
 import com.birdy.fragileLife.managers.TeamManager;
 import com.birdy.fragileLife.managers.ProfileManager;
 
+import java.util.*;
+
 public final class FragileLife extends JavaPlugin {
 
+    public static final List<Location> placedMissionBlockLocations = new ArrayList<>();
+
     ProfileManager profileManager = new ProfileManager(getDataFolder());
-    ReactionManager reactionManager = new ReactionManager(this, getDataFolder());
+    TeamManager teamManager = new TeamManager();
+    ReactionManager reactionManager = new ReactionManager(this, profileManager, teamManager, getDataFolder());
 
     public static final Component pluginPrefix =
             Component.text("[")
@@ -47,7 +54,6 @@ public final class FragileLife extends JavaPlugin {
         // Plugin startup logic
         getLogger().info("FragileLife has started!");
 
-        TeamManager teamManager = new TeamManager();
         teamManager.initializeTeams();
 
         reactionManager.scheduleNextReaction();
@@ -63,6 +69,10 @@ public final class FragileLife extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new BlockBreakListener(profileManager,teamManager), this);
         getServer().getPluginManager().registerEvents(new TagGUIListener(profileManager), this);
         getServer().getPluginManager().registerEvents(new ReactionGUIListener(reactionManager), this);
+        getServer().getPluginManager().registerEvents(new FishEventListener(profileManager, teamManager), this);
+        getServer().getPluginManager().registerEvents(new BlockPlaceListener(profileManager, teamManager), this);
+        getServer().getPluginManager().registerEvents(new PlayerMoveListener(profileManager, teamManager), this);
+        getServer().getPluginManager().registerEvents(new PickupExperienceListener(profileManager, teamManager), this);
 
         getCommand("chat").setExecutor(new ChatCommand(profileManager));
         getCommand("gift").setExecutor(new GiftCommand(profileManager, teamManager));
@@ -70,6 +80,7 @@ public final class FragileLife extends JavaPlugin {
         getCommand("missions").setExecutor(new MissionCommand(profileManager,teamManager));
         getCommand("tags").setExecutor(new TagCommand(profileManager));
         getCommand("reaction").setExecutor(new ReactionCommand(reactionManager));
+        getCommand("nick").setExecutor(new NickCommand(profileManager, teamManager));
     }
 
     @Override

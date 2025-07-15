@@ -5,16 +5,11 @@ import com.birdy.fragileLife.managers.ProfileManager;
 import com.birdy.fragileLife.managers.TeamManager;
 import com.birdy.fragileLife.missions.types.*;
 import com.birdy.fragileLife.schemas.Profile;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.inventory.ItemStack;
 
 public class BlockBreakListener implements Listener {
     private final ProfileManager profileManager;
@@ -24,30 +19,30 @@ public class BlockBreakListener implements Listener {
         this.profileManager = profileManager;
         this.teamManager = teamManager;
     }
+
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
         Player p = e.getPlayer();
         Profile profile = profileManager.getProfile(p.getUniqueId());
+        
+        Material block = e.getBlock().getType();
 
-        ItemStack itemInHand = p.getInventory().getItemInMainHand();
-        if (itemInHand.getType() != Material.AIR && itemInHand.getItemMeta().hasEnchant(Enchantment.SILK_TOUCH)) {
-            p.sendMessage(FragileLife.pluginWarningPrefix
-                    .append(Component.text("Silk touch is not allowed.", NamedTextColor.GRAY)));
-            p.getInventory().setItemInMainHand(new ItemStack(Material.AIR));
-            p.playSound(p.getLocation(), Sound.ENTITY_ITEM_BREAK, 1.0f, 1.0f);
-            e.setCancelled(true);
+        if(FragileLife.placedMissionBlockLocations.contains(e.getBlock().getLocation())){
+            FragileLife.placedMissionBlockLocations.remove(e.getBlock().getLocation());
             return;
         }
 
-        if (e.getBlock().getType() == Material.DIAMOND_ORE || e.getBlock().getType() == Material.DEEPSLATE_DIAMOND_ORE) {
-            MineDiamondsMission mineDiamondsMission = new MineDiamondsMission();
-            mineDiamondsMission.trigger(profile, teamManager, p);
-        } else if (e.getBlock().getType() == Material.IRON_ORE || e.getBlock().getType() == Material.DEEPSLATE_IRON_ORE) {
-            MineIronMission mineIronMission = new MineIronMission();
-            mineIronMission.trigger(profile, teamManager, p);
-        } else if (e.getBlock().getType() == Material.EMERALD_ORE || e.getBlock().getType() == Material.DEEPSLATE_EMERALD_ORE) {
-            MineEmeraldMission mineEmeraldMission = new MineEmeraldMission();
-            mineEmeraldMission.trigger(profile, teamManager, p);
+        if (block.name().endsWith("_ORE")) {
+            MineOreMission mineOreMission = new MineOreMission();
+            mineOreMission.trigger(profile, teamManager, p, 1);
+
+            if (block == Material.DIAMOND_ORE || block == Material.DEEPSLATE_DIAMOND_ORE) {
+                MineDiamondsMission mineDiamondsMission = new MineDiamondsMission();
+                mineDiamondsMission.trigger(profile, teamManager, p, 1);
+            }
+        } else if (block.name().endsWith("_LOG")){
+            ChopLogsMission chopLogsMission = new ChopLogsMission();
+            chopLogsMission.trigger(profile, teamManager, p, 1);
         }
     }
 }

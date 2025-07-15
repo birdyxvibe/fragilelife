@@ -1,13 +1,9 @@
 package com.birdy.fragileLife.missions.types;
 
-import com.birdy.fragileLife.FragileLife;
-import com.birdy.fragileLife.managers.TeamManager;
 import com.birdy.fragileLife.schemas.Profile;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
-import org.bukkit.attribute.Attribute;
-import org.bukkit.entity.Player;
 import java.time.Duration;
 
 public class KillPlayersMission extends Mission {
@@ -15,8 +11,8 @@ public class KillPlayersMission extends Mission {
     private final int targetKills;
 
     public KillPlayersMission() {
-        super("kill_player", "Murderer","Kill 1 Player",
-                10, Duration.ofHours(24), Material.NETHERITE_SWORD, true);
+        super("kill_player", "Murderer","Kill 2 Players",
+                10, Duration.ofHours(8), Material.NETHERITE_SWORD, true);
         this.targetKills = 1;
     }
 

@@ -1,7 +1,13 @@
-package com.birdy.fragileLife.reactions;
+package com.birdy.fragileLife.reactions.reactionTypes;
 
 import com.birdy.fragileLife.FragileLife;
+import com.birdy.fragileLife.managers.ProfileManager;
+import com.birdy.fragileLife.managers.TeamManager;
+import com.birdy.fragileLife.missions.types.WinReactionMission;
+import com.birdy.fragileLife.reactions.ReactionManager;
+import com.birdy.fragileLife.reactions.ReactionType;
 import com.birdy.fragileLife.reactions.reactionData.ReactionPrizes;
+import com.birdy.fragileLife.schemas.Profile;
 import com.birdy.fragileLife.schemas.React;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -19,6 +25,8 @@ import java.util.Map;
 public abstract class Reaction {
     private final FragileLife plugin;
     private final ReactionManager reactionManager;
+    private final ProfileManager profileManager;
+    private final TeamManager teamManager;
 
     protected boolean active;
     protected final String answer;
@@ -28,9 +36,12 @@ public abstract class Reaction {
     protected final String actionPastTense;
     protected final ReactionType type;
 
-    public Reaction(FragileLife plugin, ReactionManager reactionManager, String[] answerText, String action, String actionPastTense, ReactionType type) {
+    public Reaction(FragileLife plugin, ProfileManager profileManager, TeamManager teamManager, ReactionManager reactionManager, String[] answerText, String action, String actionPastTense, ReactionType type) {
         this.plugin = plugin;
+        this.profileManager = profileManager;
+        this.teamManager = teamManager;
         this.reactionManager = reactionManager;
+
         this.answer = answerText[0];
         this.text = answerText[1];
         this.active = true;
@@ -88,6 +99,10 @@ public abstract class Reaction {
                     .append(Component.text(" seconds and won ", TextColor.fromHexString("#36d736")))
                     .append(Component.text(prize + "!", TextColor.fromHexString("#86FF99")));
 
+            Profile profile = profileManager.getProfile(winner.getUniqueId());
+
+            WinReactionMission winReactionMission = new WinReactionMission();
+            winReactionMission.trigger(profile, teamManager, winner, 1);
             reactionManager.addReaction(new React(winner.getUniqueId(), Double.parseDouble(formattedTime), Instant.now().toString(), type));
         } else {
             reactionMessage = Component.empty()

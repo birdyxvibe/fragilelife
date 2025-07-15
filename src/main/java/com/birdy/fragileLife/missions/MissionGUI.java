@@ -29,30 +29,41 @@ public class MissionGUI {
 
         // Populate GUI with Fillers
         final ItemStack fillerItem1 = createFiller(Material.GRAY_STAINED_GLASS_PANE);
-        final ItemStack fillerItem2 = createFiller(Material.CHAIN);
 
         for(int i = 0; i < GUI_SIZE; i++) {
-            if (i <= 8 || i >= 27) {
-                gui.setItem(i, fillerItem1);
-            } else if (i % 9 == 0 || i % 9 == 8) {
-                gui.setItem(i, fillerItem2);
-            }
+            gui.setItem(i, fillerItem1);
         }
 
         Profile profile = profileManager.getProfile(p.getUniqueId());
-        int slot = 10;
+        int slot = 11;
 
         // Add new missions here
         List<Mission> missions = new ArrayList<>();
         missions.add(new KillMonstersMission());
-        missions.add(new KillPlayersMission());
+        missions.add(new KillWitchMission());
+
         missions.add(new KillAnimalsMission());
+
+        missions.add(new PlaceBlocksMission());
+
+        missions.add(new ChopLogsMission());
+
+        missions.add(new MineOreMission());
         missions.add(new MineDiamondsMission());
-        missions.add(new MineIronMission());
-        missions.add(new MineEmeraldMission());
+
+        missions.add(new CatchFishMission());
+
+        missions.add(new CollectXPMission());
+
+        missions.add(new WalkDistanceMission());
+
+        missions.add(new WinReactionMission());
+
+        //Red Only Missions Below
+        missions.add(new KillPlayersMission());
 
         for(Mission m : missions) {
-            if(slot == 17) slot += 2;
+            if(slot == 16) slot += 3;
 
             // Lock red team missions from non-red team players
             if (teamManager.getPlayerTeamColor(p) != NamedTextColor.RED && m.isRedOnly()) {
@@ -73,7 +84,7 @@ public class MissionGUI {
 
             // Display name gradient
             MiniMessage mm = MiniMessage.miniMessage();
-            Component gradientText = mm.deserialize("<u><b><gradient:#33BC49:#27F96D:#5FE291>" + m.getName() + "</gradient></b></u>");
+            Component gradientText = mm.deserialize("<u><b><gradient:#33BC49:#27F96D:#5FE291>" + m.getName() + "</gradient></b></u>").decoration(TextDecoration.ITALIC, false);
             meta.displayName(gradientText);
 
             // Build Lore

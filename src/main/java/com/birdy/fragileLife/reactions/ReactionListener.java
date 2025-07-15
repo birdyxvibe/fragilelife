@@ -2,6 +2,7 @@ package com.birdy.fragileLife.reactions;
 
 import com.birdy.fragileLife.FragileLife;
 import com.birdy.fragileLife.managers.TeamManager;
+import com.birdy.fragileLife.reactions.reactionTypes.Reaction;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;

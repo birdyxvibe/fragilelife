@@ -7,26 +7,24 @@ import org.bukkit.Material;
 
 import java.time.Duration;
 
-public class KillMonstersMission extends Mission {
+public class WalkDistanceMission extends Mission {
+    private final int targetDistance;
 
-    private final int targetKills;
-
-    public KillMonstersMission() {
-        super("kill_monsters", "Slayer","Kill 25 Hostile Mobs",
-                3, Duration.ofHours(12), Material.ROTTEN_FLESH, false);
-        this.targetKills = 25;
+    public WalkDistanceMission() {
+        super("walk_distance", "Marathon","Walk 2500 Blocks",
+                1, Duration.ofHours(6), Material.CHAINMAIL_BOOTS, false);
+        this.targetDistance = 2500;
     }
 
     @Override
     public boolean isComplete(Profile profile) {
-        return getProgress(profile) >= targetKills;
+        return getProgress(profile) >= targetDistance;
     }
 
     @Override
     public Component getProgressComponent(Profile profile) {
         return Component.text(getProgress(profile), NamedTextColor.WHITE)
                 .append(Component.text("/", NamedTextColor.WHITE))
-                .append(Component.text(targetKills, NamedTextColor.WHITE));
+                .append(Component.text(targetDistance, NamedTextColor.WHITE));
     }
-
 }

@@ -7,26 +7,24 @@ import org.bukkit.Material;
 
 import java.time.Duration;
 
-public class KillMonstersMission extends Mission {
+public class PlaceBlocksMission extends Mission {
+    private final int targetBlocks;
 
-    private final int targetKills;
-
-    public KillMonstersMission() {
-        super("kill_monsters", "Slayer","Kill 25 Hostile Mobs",
-                3, Duration.ofHours(12), Material.ROTTEN_FLESH, false);
-        this.targetKills = 25;
+    public PlaceBlocksMission() {
+        super("place_blocks", "Builder","Place 250 Blocks",
+                1, Duration.ofHours(8), Material.BRICKS, false);
+        this.targetBlocks = 250;
     }
 
     @Override
     public boolean isComplete(Profile profile) {
-        return getProgress(profile) >= targetKills;
+        return getProgress(profile) >= targetBlocks;
     }
 
     @Override
     public Component getProgressComponent(Profile profile) {
         return Component.text(getProgress(profile), NamedTextColor.WHITE)
                 .append(Component.text("/", NamedTextColor.WHITE))
-                .append(Component.text(targetKills, NamedTextColor.WHITE));
+                .append(Component.text(targetBlocks, NamedTextColor.WHITE));
     }
-
 }

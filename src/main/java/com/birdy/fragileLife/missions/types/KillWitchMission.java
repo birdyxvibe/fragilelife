@@ -7,14 +7,13 @@ import org.bukkit.Material;
 
 import java.time.Duration;
 
-public class KillMonstersMission extends Mission {
-
+public class KillWitchMission extends Mission {
     private final int targetKills;
 
-    public KillMonstersMission() {
-        super("kill_monsters", "Slayer","Kill 25 Hostile Mobs",
-                3, Duration.ofHours(12), Material.ROTTEN_FLESH, false);
-        this.targetKills = 25;
+    public KillWitchMission() {
+        super("kill_witch", "Witch Hunt","Kill 1 Witch",
+                3, Duration.ofHours(24), Material.SPLASH_POTION, false);
+        this.targetKills = 1;
     }
 
     @Override
@@ -28,5 +27,4 @@ public class KillMonstersMission extends Mission {
                 .append(Component.text("/", NamedTextColor.WHITE))
                 .append(Component.text(targetKills, NamedTextColor.WHITE));
     }
-
 }
