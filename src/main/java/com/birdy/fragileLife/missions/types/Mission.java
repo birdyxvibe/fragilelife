@@ -111,7 +111,6 @@ public abstract class Mission {
                 .append(Component.text(" Soul Fragment(s)", NamedTextColor.GRAY)));
     }
 
-    public String getId() { return id; }
     public Material getGuiMaterial() { return guiMaterial; }
     public String getName() {return name; }
     public String getDesc() { return desc; }

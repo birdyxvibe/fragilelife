@@ -3,6 +3,7 @@ package com.birdy.fragileLife;
 import com.birdy.fragileLife.chat.ChatCommand;
 import com.birdy.fragileLife.chat.ChatGUIListener;
 import com.birdy.fragileLife.chat.NickCommand;
+import com.birdy.fragileLife.commands.SoulFragmentCommand;
 import com.birdy.fragileLife.listeners.*;
 import com.birdy.fragileLife.commands.GiftCommand;
 import com.birdy.fragileLife.greetings.GreetingCommand;
@@ -13,6 +14,10 @@ import com.birdy.fragileLife.missions.MissionCommand;
 import com.birdy.fragileLife.missions.MissionGUIListener;
 import com.birdy.fragileLife.reactions.stats.ReactionCommand;
 import com.birdy.fragileLife.reactions.stats.ReactionGUIListener;
+import com.birdy.fragileLife.slots.SlotCommand;
+import com.birdy.fragileLife.slots.SlotGUIListener;
+import com.birdy.fragileLife.store.StoreCommand;
+import com.birdy.fragileLife.store.StoreGUIListener;
 import com.birdy.fragileLife.tags.TagCommand;
 import com.birdy.fragileLife.tags.TagGUIListener;
 import net.kyori.adventure.text.Component;
@@ -77,6 +82,10 @@ public final class FragileLife extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new BlockPlaceListener(profileManager, teamManager), this);
         getServer().getPluginManager().registerEvents(new PlayerMoveListener(profileManager, teamManager), this);
         getServer().getPluginManager().registerEvents(new PickupExperienceListener(profileManager, teamManager), this);
+        getServer().getPluginManager().registerEvents(new StoreGUIListener(profileManager), this);
+        getServer().getPluginManager().registerEvents(new PlayerInteractListener(), this);
+        getServer().getPluginManager().registerEvents(new EntityResurrectListener(), this);
+        getServer().getPluginManager().registerEvents(new SlotGUIListener(this,profileManager),this);
 
         getCommand("chat").setExecutor(new ChatCommand(profileManager));
         getCommand("gift").setExecutor(new GiftCommand(profileManager, teamManager));
@@ -85,6 +94,9 @@ public final class FragileLife extends JavaPlugin {
         getCommand("tags").setExecutor(new TagCommand(profileManager));
         getCommand("reaction").setExecutor(new ReactionCommand(reactionManager));
         getCommand("nick").setExecutor(new NickCommand(profileManager, teamManager));
+        getCommand("store").setExecutor(new StoreCommand(profileManager));
+        getCommand("soulfragment").setExecutor(new SoulFragmentCommand(profileManager));
+        getCommand("slot").setExecutor(new SlotCommand(profileManager));
     }
 
     @Override

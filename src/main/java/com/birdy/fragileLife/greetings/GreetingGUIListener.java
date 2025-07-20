@@ -47,7 +47,6 @@ public class GreetingGUIListener implements Listener {
                         return;
                     }
                     profile.setGreeting("RAND");
-                    p.closeInventory();
                     GreetingGUI.open(p, profileManager);
 
                     p.sendMessage(FragileLife.pluginPrefix
@@ -61,7 +60,7 @@ public class GreetingGUIListener implements Listener {
                 profile.setGreeting(greetingPlainText);
 
                 // Refresh inventory for to highlight newly selected greeting
-                p.closeInventory();
+                
                 GreetingGUI.open(p, profileManager);
 
                 p.sendMessage(FragileLife.pluginPrefix

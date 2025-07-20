@@ -60,7 +60,7 @@ public class MissionGUI {
         missions.add(new WinReactionMission());
 
         //Red Only Missions Below
-        missions.add(new KillPlayersMission());
+        missions.add(new KillPlayerMission());
 
         for(Mission m : missions) {
             if(slot == 16) slot += 3;
@@ -99,11 +99,17 @@ public class MissionGUI {
             lore.add(Component.text("* ", NamedTextColor.AQUA)
                     .append(Component.text("Progress: ", NamedTextColor.GRAY))
                     .append(m.getProgressComponent(profile)));
-            lore.add(Component.text("* ", NamedTextColor.AQUA)
-                    .append(Component.text("Reward: ", NamedTextColor.GRAY))
-                    .append(Component.text(m.getReward(), NamedTextColor.WHITE))
-                    .append(Component.text(" Soul Fragment(s)", NamedTextColor.WHITE)));
-
+            if (m.getReward() == -1) {
+                lore.add(Component.text("* ", NamedTextColor.AQUA)
+                        .append(Component.text("Reward: ", NamedTextColor.GRAY))
+                        .append(Component.text("Return to your ", NamedTextColor.WHITE))
+                        .append(Component.text("2nd life", NamedTextColor.YELLOW)));
+            } else {
+                lore.add(Component.text("* ", NamedTextColor.AQUA)
+                        .append(Component.text("Reward: ", NamedTextColor.GRAY))
+                        .append(Component.text(m.getReward(), NamedTextColor.WHITE))
+                        .append(Component.text(" Soul Fragment(s)", NamedTextColor.WHITE)));
+            }
 
             String cooldown = m.getCooldown(profile);
             if (!cooldown.isEmpty() && !cooldown.equals("now")) {

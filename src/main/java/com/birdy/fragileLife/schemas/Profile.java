@@ -17,6 +17,8 @@ public class Profile {
     private String giftCooldown = new Date().toInstant().toString();
     private boolean isChatBold = false;
     private boolean isChatItalic = false;
+    private int wager = 1;
+    private boolean isSpinning = false;
 
     private final Map<String, Integer> missionProgress = new HashMap<>();
     private final Map<String, String> missionCooldowns = new HashMap<>();
@@ -74,6 +76,22 @@ public class Profile {
 
     public String getNickname() { return nickname; }
     public void setNickname(String nickname) { this.nickname = nickname; }
+
+    public int getWager() {
+        return wager;
+    }
+
+    public void setWager(int wager) {
+        this.wager = wager;
+    }
+
+    public boolean isSpinning() {
+        return isSpinning;
+    }
+
+    public void setSpinning(boolean spinning) {
+        isSpinning = spinning;
+    }
 
     // Add more getter and setter functions here...
 }

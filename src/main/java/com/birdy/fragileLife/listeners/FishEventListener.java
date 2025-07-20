@@ -29,6 +29,7 @@ public class FishEventListener implements Listener {
             Profile profile = profileManager.getProfile(p.getUniqueId());
 
             Item caught = (Item)e.getCaught();
+            if (caught == null) return;
             ItemStack item = caught.getItemStack();
             if(isFish(item.getType())){
                 CatchFishMission catchFishMission = new CatchFishMission();

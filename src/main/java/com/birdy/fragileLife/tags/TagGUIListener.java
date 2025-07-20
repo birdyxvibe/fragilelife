@@ -58,7 +58,7 @@ public class TagGUIListener implements Listener {
                 }
 
                 // Refresh inventory for to highlight newly selected tag
-                p.closeInventory();
+                
                 TagGUI.open(p, profileManager);
 
             }

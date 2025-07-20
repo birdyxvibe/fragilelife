@@ -10,8 +10,7 @@ public class PlayerDamageListener implements Listener {
 
     @EventHandler
     public void onEntityDamage(EntityDamageEvent e){
-        if (e.getEntity() instanceof Player){
-            Player p = (Player) e.getEntity();
+        if (e.getEntity() instanceof Player p){
 
             double damageTaken = e.getDamage();
             double currentHealth = p.getAttribute(Attribute.MAX_HEALTH).getBaseValue();

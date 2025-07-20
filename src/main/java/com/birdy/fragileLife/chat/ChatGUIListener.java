@@ -49,7 +49,7 @@ public class ChatGUIListener implements Listener {
                         profile.setChatItalic(!active);
                 }
 
-                p.closeInventory();
+                
                 ChatGUI.open(p, profileManager);
                 p.sendMessage(FragileLife.pluginPrefix
                         .append(Component.text(plainText, NamedTextColor.WHITE))
@@ -62,7 +62,7 @@ public class ChatGUIListener implements Listener {
                 profile.setChatColor(colorData.color.asHexString());
 
                 // Refresh inventory for to highlight newly selected color
-                p.closeInventory();
+                
                 ChatGUI.open(p, profileManager);
 
                 p.sendMessage(FragileLife.pluginPrefix
