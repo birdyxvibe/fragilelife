@@ -19,6 +19,7 @@ public class Profile {
     private boolean isChatItalic = false;
     private int wager = 1;
     private boolean isSpinning = false;
+    private boolean pvpDisabled = false;
 
     private final Map<String, Integer> missionProgress = new HashMap<>();
     private final Map<String, String> missionCooldowns = new HashMap<>();
@@ -91,6 +92,14 @@ public class Profile {
 
     public void setSpinning(boolean spinning) {
         isSpinning = spinning;
+    }
+
+    public boolean isPvpDisabled() {
+        return pvpDisabled;
+    }
+
+    public void setPvpDisabled(boolean pvpDisabled) {
+        this.pvpDisabled = pvpDisabled;
     }
 
     // Add more getter and setter functions here...

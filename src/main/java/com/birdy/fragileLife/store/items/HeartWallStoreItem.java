@@ -16,51 +16,51 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CrimsonCarverStoreItem extends StoreItem{
+public class HeartWallStoreItem extends StoreItem{
 
-    public CrimsonCarverStoreItem() {
-        super("crimson_carver",
+    public HeartWallStoreItem() {
+        super("heart_wall",
                 generateName(),
-                "Unlock an Efficiency IV diamond pickaxe.",
+                "Unlock an Unbreaking III shield.",
                 "",
                 generateLore(),
-                10,
-                Material.DIAMOND_PICKAXE,
+                15,
+                Material.SHIELD,
                 false);
     }
 
     private static Component generateName(){
         MiniMessage mm = MiniMessage.miniMessage();
-        return mm.deserialize("<b><gradient:#E10808:#D85454:#F38E8E>Crimson Carver</gradient></b>");
+        return mm.deserialize("<b><gradient:#E43A3A:#D39548>Heart Wall</gradient></b>");
     }
 
     private static List<Component> generateLore() {
         List<Component> lore = new ArrayList<>();
-        lore.add(Component.text("A pickaxe forged in deep crimson fire, breaking through", NamedTextColor.GRAY));
-        lore.add(Component.text("the toughest stone with unmatched speed and power.", NamedTextColor.GRAY));
+        lore.add(Component.text("A shield that wears with time but refuses to fall, its", NamedTextColor.GRAY));
+        lore.add(Component.text("strength drawn from the quiet resilience of its bearer.", NamedTextColor.GRAY));
         lore.add(Component.empty());
         lore.add(Component.text("Attributes", NamedTextColor.AQUA, TextDecoration.BOLD));
         lore.add(Component.text("* ", NamedTextColor.WHITE)
-                .append(Component.text("Efficiency 4 ", NamedTextColor.DARK_GREEN)));
+                .append(Component.text("Unbreaking 3 ", NamedTextColor.GOLD)));
         lore.add(Component.text("* ", NamedTextColor.WHITE)
-                .append(Component.text("Unbreakable", NamedTextColor.GOLD)));
+                .append(Component.text("Mending", NamedTextColor.LIGHT_PURPLE)));
         return lore;
     }
 
     @Override
     public ItemStack generateItem() {
-        ItemStack crimsonCarver = new ItemStack(guiMaterial);
-        ItemMeta crimsonCarverMeta = crimsonCarver.getItemMeta();
-        crimsonCarverMeta.displayName(name);
-        crimsonCarverMeta.lore(lore);
+        ItemStack heartWall = new ItemStack(guiMaterial);
+        ItemMeta heartWallItemMeta = heartWall.getItemMeta();
+        heartWallItemMeta.displayName(name);
+        heartWallItemMeta.lore(lore);
 
-        crimsonCarverMeta.addEnchant(Enchantment.EFFICIENCY, 4, true);
-        crimsonCarverMeta.setUnbreakable(true);
-        crimsonCarverMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        crimsonCarverMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        crimsonCarverMeta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-        crimsonCarver.setItemMeta(crimsonCarverMeta);
-        return crimsonCarver;
+        heartWallItemMeta.addEnchant(Enchantment.UNBREAKING, 3, true);
+        heartWallItemMeta.addEnchant(Enchantment.MENDING, 1, true);
+        heartWallItemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        heartWallItemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        heartWallItemMeta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+        heartWall.setItemMeta(heartWallItemMeta);
+        return heartWall;
     }
 
     @Override

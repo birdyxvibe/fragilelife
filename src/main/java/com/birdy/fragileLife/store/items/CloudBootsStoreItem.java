@@ -27,7 +27,7 @@ public class CloudBootsStoreItem extends StoreItem{
                 "Unlock chainmail boots that let you fall up to",
                 "5 blocks without taking damage.",
                 generateLore(),
-                25,
+                30,
                 Material.CHAINMAIL_BOOTS,
                 false);
     }

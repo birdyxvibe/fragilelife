@@ -1,63 +1,60 @@
 package com.birdy.fragileLife.store.items;
 
 import com.birdy.fragileLife.FragileLife;
+import com.birdy.fragileLife.managers.ProfileManager;
 import com.birdy.fragileLife.schemas.Profile;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HeartStoreItem extends StoreItem{
+public class HorcruxStoreItem extends StoreItem{
 
-    public HeartStoreItem() {
-        super("single_heart",
+    public HorcruxStoreItem() {
+        super("horcrux",
                 generateName(),
-                "Unlock to gain a +1♥ voucher",
-                "",
+                "Disable PvP only for yourself",
+                "for 15 minutes",
                 generateLore(),
-                1,
-                Material.RED_DYE,
+                50,
+                Material.WITHER_ROSE,
                 false);
     }
 
     private static Component generateName(){
         MiniMessage mm = MiniMessage.miniMessage();
-        return mm.deserialize("<b><gradient:#E43A96:#FF0000>Heart</gradient></b>");
+        return mm.deserialize("<b><gradient:#1B0042:#272525:#000000>Horcrux</gradient></b>");
     }
 
     private static List<Component> generateLore() {
         List<Component> lore = new ArrayList<>();
-        lore.add(Component.text("Right click to add 1", NamedTextColor.GRAY)
-                .append(Component.text("♥", NamedTextColor.RED)));
+        lore.add(Component.text("Once shattered in desperation, the Horcrux seals its bearer from ", NamedTextColor.GRAY));
+        lore.add(Component.text("bloodshed, cloaking them in the binding calm of a forgotten pact.", NamedTextColor.GRAY));
         lore.add(Component.empty());
-        lore.add(Component.text("Attributes", NamedTextColor.AQUA, TextDecoration.BOLD));
-        lore.add(Component.text("* ", NamedTextColor.WHITE)
-                .append(Component.text("+1",NamedTextColor.WHITE))
-                .append(Component.text("♥", NamedTextColor.RED))
-                .append(Component.text(" permanently", NamedTextColor.WHITE)));
+        lore.add(Component.text("Right click to activate", NamedTextColor.GRAY));
         return lore;
     }
 
     @Override
     public ItemStack generateItem() {
-        ItemStack heart = new ItemStack(guiMaterial);
-        heart.setAmount(1);
-        ItemMeta heartMeta = heart.getItemMeta();
-        heartMeta.displayName(name);
-        heartMeta.lore(lore);
-        heart.setItemMeta(heartMeta);
-        return heart;
+        ItemStack horcrux = new ItemStack(guiMaterial);
+        ItemMeta horcruxItemMeta = horcrux.getItemMeta();
+        horcruxItemMeta.displayName(name);
+        horcruxItemMeta.lore(lore);
+
+        horcrux.setItemMeta(horcruxItemMeta);
+        return horcrux;
     }
 
     @Override
@@ -73,7 +70,7 @@ public class HeartStoreItem extends StoreItem{
                 .append(Component.text("Purchased.", NamedTextColor.GRAY)));
     }
 
-    public void addHeart(PlayerInteractEvent event){
+    public void beginHorcruxRitual(PlayerInteractEvent event, Plugin plugin, ProfileManager profileManager){
         if (event.getHand() != EquipmentSlot.HAND) return; // Only handle main hand
 
         Action action = event.getAction();
@@ -84,24 +81,28 @@ public class HeartStoreItem extends StoreItem{
 
         if (!item.getItemMeta().equals(generateItem().getItemMeta())) return;
         Player p = event.getPlayer();
+        Profile profile = profileManager.getProfile(p.getUniqueId());
 
-        // Ensure they have less than 29 hearts
-        double pHealth = p.getAttribute(Attribute.MAX_HEALTH).getBaseValue();
-        if (pHealth > 58) {
+        if (profile.isPvpDisabled()) {
             p.sendMessage(FragileLife.pluginWarningPrefix
-                    .append(Component.text("You ", NamedTextColor.GRAY))
-                    .append(Component.text("cannot exceed 30", NamedTextColor.GRAY))
-                    .append(Component.text(" ♥", NamedTextColor.RED)));
+                    .append(Component.text("You already have a Horcrux active.", NamedTextColor.GRAY)));
             return;
         }
 
         item.setAmount(item.getAmount() - 1);
+        profile.setPvpDisabled(true);
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                // Remove player from no-PvP list or reverse immunity effect here
+                profile.setPvpDisabled(false);
+                p.sendMessage(FragileLife.pluginPrefix
+                        .append(Component.text("Your Horcrux has expired. PvP is now enabled.", NamedTextColor.GRAY)));
+            }
+        }.runTaskLater(plugin, 20L * 60 * 15); // 20 ticks * 60 seconds * 15 minutes
 
         // Give heart
-        p.getAttribute(Attribute.MAX_HEALTH).setBaseValue(pHealth + 2);
         p.sendMessage(FragileLife.pluginPrefix
-                .append(Component.text("You have redeemed a +1", NamedTextColor.GRAY))
-                .append(Component.text(" ♥ ", NamedTextColor.RED))
-                .append(Component.text("voucher", NamedTextColor.GRAY)));
+                .append(Component.text("You have activated your Horcrux. PvP disabled for 15m", NamedTextColor.GRAY)));
     }
 }

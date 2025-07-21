@@ -6,7 +6,7 @@ import java.util.*;
 
 public class Slot {
 
-    public static final List<Integer> WAGER_AMOUNTS = List.of(1, 5, 10, 15, 20, 25, 30);
+    public static final List<Integer> WAGER_AMOUNTS = List.of(1, 4, 8, 16, 32, 64);
 
     public static final Map<Material, Integer> PAYOUT_MULTIPLIER = Map.of(
             Material.ROTTEN_FLESH, 1,

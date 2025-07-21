@@ -14,6 +14,8 @@ import com.birdy.fragileLife.missions.MissionCommand;
 import com.birdy.fragileLife.missions.MissionGUIListener;
 import com.birdy.fragileLife.reactions.stats.ReactionCommand;
 import com.birdy.fragileLife.reactions.stats.ReactionGUIListener;
+import com.birdy.fragileLife.schemas.Profile;
+import com.birdy.fragileLife.scoreboard.HealthScoreboard;
 import com.birdy.fragileLife.slots.SlotCommand;
 import com.birdy.fragileLife.slots.SlotGUIListener;
 import com.birdy.fragileLife.store.StoreCommand;
@@ -23,7 +25,9 @@ import com.birdy.fragileLife.tags.TagGUIListener;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import com.birdy.fragileLife.managers.TeamManager;
 import com.birdy.fragileLife.managers.ProfileManager;
@@ -37,6 +41,9 @@ public final class FragileLife extends JavaPlugin {
     ProfileManager profileManager;
     TeamManager teamManager;
     ReactionManager reactionManager;
+    static HealthScoreboard healthBoard;
+
+
 
     public static final Component pluginPrefix =
             Component.text("[")
@@ -67,8 +74,14 @@ public final class FragileLife extends JavaPlugin {
         reactionManager = new ReactionManager(this, profileManager, teamManager, getDataFolder());
         reactionManager.scheduleNextReaction();
 
-        getServer().getPluginManager().registerEvents(new PlayerJoinListener(this, teamManager, profileManager), this);
-        getServer().getPluginManager().registerEvents(new PlayerDamageListener(), this);
+        healthBoard = new HealthScoreboard(this, teamManager);
+
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            healthBoard.assignTo(player);
+        }
+
+        getServer().getPluginManager().registerEvents(new PlayerJoinListener(this, teamManager, profileManager, healthBoard), this);
+        getServer().getPluginManager().registerEvents(new PlayerDamageListener(profileManager), this);
         getServer().getPluginManager().registerEvents(new PlayerDeathListener(teamManager, profileManager), this);
         getServer().getPluginManager().registerEvents(new ChatGUIListener(profileManager), this);
         getServer().getPluginManager().registerEvents(new PlayerChatListener(teamManager, profileManager, reactionManager), this);
@@ -83,9 +96,11 @@ public final class FragileLife extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerMoveListener(profileManager, teamManager), this);
         getServer().getPluginManager().registerEvents(new PickupExperienceListener(profileManager, teamManager), this);
         getServer().getPluginManager().registerEvents(new StoreGUIListener(profileManager), this);
-        getServer().getPluginManager().registerEvents(new PlayerInteractListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerInteractListener(this, profileManager), this);
         getServer().getPluginManager().registerEvents(new EntityResurrectListener(), this);
         getServer().getPluginManager().registerEvents(new SlotGUIListener(this,profileManager),this);
+        getServer().getPluginManager().registerEvents(new ProjectileHitListener(this), this);
+        getServer().getPluginManager().registerEvents(new ProjectileLaunchListener(this), this);
 
         getCommand("chat").setExecutor(new ChatCommand(profileManager));
         getCommand("gift").setExecutor(new GiftCommand(profileManager, teamManager));
@@ -101,6 +116,12 @@ public final class FragileLife extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            Profile profile = profileManager.getProfile(player.getUniqueId());
+            if (profile != null) {
+                profile.setPvpDisabled(false);
+            }
+        }
         if(profileManager != null){
             profileManager.saveAll();
         }

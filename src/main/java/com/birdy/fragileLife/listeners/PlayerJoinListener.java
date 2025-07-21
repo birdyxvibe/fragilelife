@@ -4,6 +4,7 @@ import com.birdy.fragileLife.FragileLife;
 import com.birdy.fragileLife.greetings.GreetingJoinEvent;
 import com.birdy.fragileLife.managers.ProfileManager;
 import com.birdy.fragileLife.managers.TeamManager;
+import com.birdy.fragileLife.scoreboard.HealthScoreboard;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
@@ -18,11 +19,13 @@ public class PlayerJoinListener implements Listener {
     private final FragileLife plugin;
     private final ProfileManager profileManager;
     private final TeamManager teamManager;
+    private final HealthScoreboard healthBoard;
 
-    public PlayerJoinListener(FragileLife plugin, TeamManager teamManager, ProfileManager profileManager){
+    public PlayerJoinListener(FragileLife plugin, TeamManager teamManager, ProfileManager profileManager, HealthScoreboard healthBoard){
         this.plugin = plugin;
         this.teamManager = teamManager;
         this.profileManager = profileManager;
+        this.healthBoard = healthBoard;
     }
 
     @EventHandler
@@ -41,8 +44,8 @@ public class PlayerJoinListener implements Listener {
 
             return;
         }
-
         greetingJoinEvent.displayGreeting();
+        healthBoard.assignTo(p);
 
     }
 }

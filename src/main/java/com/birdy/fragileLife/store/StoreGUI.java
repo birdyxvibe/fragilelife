@@ -24,13 +24,17 @@ public class StoreGUI {
 
     // Add new missions here
     public static final List<StoreItem> storeItems = new ArrayList<>(Arrays.asList(
-            new CloudBootsStoreItem(),
+            new HorcruxStoreItem(),
             new ReviveTotemStoreItem(),
             new GoldenAppleStoreItem(),
             new HeartStoreItem(),
             new ThreeHeartStoreItem(),
             new CrimsonCarverStoreItem(),
-            new HammerTimeStoreItem()));
+            new CloudBootsStoreItem(),
+            new HammerTimeStoreItem(),
+            new HeartWallStoreItem(),
+            new HappyDustStoreItem(),
+            new CryoChargeStoreItem()));
 
     public static void open(Player p, ProfileManager profileManager){
         Inventory gui = Bukkit.createInventory(null, GUI_SIZE, Component.text(GUI_TITLE));
