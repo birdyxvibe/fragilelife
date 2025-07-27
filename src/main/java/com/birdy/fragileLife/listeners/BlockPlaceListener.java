@@ -5,6 +5,8 @@ import com.birdy.fragileLife.managers.ProfileManager;
 import com.birdy.fragileLife.managers.TeamManager;
 import com.birdy.fragileLife.missions.types.PlaceBlocksMission;
 import com.birdy.fragileLife.schemas.Profile;
+import com.birdy.fragileLife.store.items.HorcruxStoreItem;
+import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -22,6 +24,9 @@ public class BlockPlaceListener implements Listener {
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent e) {
         Profile profile = profileManager.getProfile(e.getPlayer().getUniqueId());
+        HorcruxStoreItem horcruxStoreItem = new HorcruxStoreItem();
+        if (e.getBlockPlaced().getType() == Material.WITHER_ROSE) {
+            e.setCancelled(true);}
 
         PlaceBlocksMission placeBlocksMission = new PlaceBlocksMission();
         placeBlocksMission.trigger(profile, teamManager, e.getPlayer(), 1);

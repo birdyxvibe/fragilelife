@@ -46,14 +46,23 @@ public class SoulFragmentCommand implements CommandExecutor {
 
         Player pTarget = Bukkit.getPlayer(name);
         if (pTarget == null) {
-            pSender.sendMessage(name + " does not exist.");
+            pSender.sendMessage(FragileLife.pluginWarningPrefix
+                    .append(Component.text(name, NamedTextColor.WHITE))
+                    .append(Component.text(" does not exist.", NamedTextColor.RED)));
             return true;
         }
 
         Profile profile = profileManager.getProfile(pTarget.getUniqueId());
-
+        int soulFragments = profile.getSoulFragments();
         switch (type) {
-            case "get" -> pSender.sendMessage(name + " has " + profile.getSoulFragments() + " soul fragments.");
+            case "get" -> {
+                pSender.sendMessage(FragileLife.pluginPrefix
+                        .append(Component.text(name, NamedTextColor.WHITE))
+                        .append(Component.text(" now has ", NamedTextColor.GRAY))
+                        .append(Component.text(soulFragments, NamedTextColor.GOLD))
+                        .append(Component.text(" soul fragment(s).", NamedTextColor.GRAY)));
+                return true;
+            }
             case "add", "remove", "set" -> {
                 if (args.length < 3) {
                     return false;
@@ -63,26 +72,38 @@ public class SoulFragmentCommand implements CommandExecutor {
                 try {
                     amount = Integer.parseInt(args[2]);
                 } catch (NumberFormatException e) {
-                    pSender.sendMessage("Please enter a valid number.");
+                    pSender.sendMessage(FragileLife.pluginWarningPrefix
+                            .append(Component.text("Please enter a valid number.", NamedTextColor.RED)));
                     return true;
                 }
 
                 if (amount < 0) {
-                    pSender.sendMessage("Please enter a positive number");
+                    pSender.sendMessage(FragileLife.pluginWarningPrefix
+                            .append(Component.text("Please enter a positive number.", NamedTextColor.RED)));;
                     return true;
                 }
 
                 switch (type) {
-                    case "add" -> profile.setSoulFragments(profile.getSoulFragments() + amount);
-                    case "remove" -> profile.setSoulFragments(profile.getSoulFragments() - amount);
-                    case "set" -> profile.setSoulFragments(amount);
+                    case "add" -> {
+                        profile.setSoulFragments(soulFragments + amount);
+                    }
+                    case "remove" -> {
+                        profile.setSoulFragments(soulFragments - amount);
+                    }
+                    case "set" -> {
+                        profile.setSoulFragments(amount);
+                    }
                 }
             }
             default -> {
                 return false;
             }
         }
-
+        pSender.sendMessage(FragileLife.pluginPrefix
+                .append(Component.text(name, NamedTextColor.WHITE))
+                .append(Component.text(" now has ", NamedTextColor.GRAY))
+                .append(Component.text(soulFragments, NamedTextColor.GOLD))
+                .append(Component.text(" soul fragment(s).", NamedTextColor.GRAY)));
         return true;
     }
 }

@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 
 public class TeamManager {
 
+
     private final Scoreboard scoreboard;
 
     private Team greenTeam;
@@ -25,6 +26,10 @@ public class TeamManager {
         yellowTeam = getOrCreateTeam("Yellow", NamedTextColor.YELLOW);
         redTeam = getOrCreateTeam("Red", NamedTextColor.RED);
         ghostTeam = getOrCreateTeam("Ghost", NamedTextColor.GRAY);
+    }
+
+    public Scoreboard getScoreboard() {
+        return scoreboard;
     }
 
     private Team getOrCreateTeam(String name, NamedTextColor color) {

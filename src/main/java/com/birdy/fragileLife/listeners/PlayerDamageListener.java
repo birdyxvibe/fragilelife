@@ -26,6 +26,7 @@ public class PlayerDamageListener implements Listener {
     @EventHandler
     public void onEntityDamage(EntityDamageEvent e) {
         if (!(e.getEntity() instanceof Player target)) return;
+        if (e.isCancelled()) return;
 
         Player damager = null;
         boolean isExplosion = e.getCause() == DamageCause.BLOCK_EXPLOSION;
@@ -70,8 +71,8 @@ public class PlayerDamageListener implements Listener {
             }
         }
 
-        // Modify health (this is unrelated to PvP logic)
-        double damageTaken = e.getDamage();
+        // Modify health
+        double damageTaken = e.getFinalDamage();
         double currentHealth = target.getAttribute(Attribute.MAX_HEALTH).getBaseValue();
 
         double newHealth = Math.max(0, currentHealth - damageTaken);

@@ -48,7 +48,7 @@ public class PlayerChatEvent {
         }
 
         Component message = chatTag
-                .append(playerName)
+                .append(playerName).decoration(TextDecoration.BOLD, profile.isChatBold())
                 .append(Component.text(": ", NamedTextColor.WHITE))
                 .append(e.message().color(TextColor.fromHexString(color)).decoration(TextDecoration.BOLD, profile.isChatBold()).decoration(TextDecoration.ITALIC, profile.isChatItalic()));
 

@@ -46,6 +46,7 @@ public class TagGUI {
         int slot = 10;
         for(Map.Entry<String, String> entry : Tags.TAGS.entrySet()) {
             if(slot == 17) slot += 2;
+            if (slot == 26) slot+= 2;
             if (entry.getKey().equals("owner") || entry.getKey().equals("dev")) {
                 if (!p.getName().equals("Ecep") && !p.getName().equals("Biirdy")) {
                     continue;

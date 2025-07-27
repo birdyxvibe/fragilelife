@@ -18,12 +18,15 @@ public class HealthScoreboard {
     public HealthScoreboard(Plugin plugin, TeamManager teamManager) {
         this.plugin = plugin;
 
-        ScoreboardManager manager = Bukkit.getScoreboardManager();
-        scoreboard = manager.getNewScoreboard();
+        scoreboard = teamManager.getScoreboard();
 
-        objective = scoreboard.registerNewObjective("healthDisplay", Criteria.DUMMY,
-                Component.text("TOP ", NamedTextColor.GRAY, TextDecoration.BOLD)
-                        .append(Component.text("♥", NamedTextColor.RED).decoration(TextDecoration.BOLD, false)));
+        if (scoreboard.getObjective("healthDisplay") == null) {
+            objective = scoreboard.registerNewObjective("healthDisplay", Criteria.DUMMY,
+                    Component.text("TOP ", NamedTextColor.GRAY, TextDecoration.BOLD)
+                            .append(Component.text("♥", NamedTextColor.RED).decoration(TextDecoration.BOLD, false)));
+        } else {
+            objective = scoreboard.getObjective("healthDisplay");
+        }
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
         startUpdating(teamManager);

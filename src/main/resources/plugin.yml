@@ -29,7 +29,7 @@ commands:
     description: Admin command to adjust player soul fragments
     aliases:
       - sf
-    usage: sf <get|add|remove|set> <name> <amount>
+    usage: sf [get|add|remove|set] [name] [amount]
   slot:
     description: Gamble away your life savings
     aliases:

@@ -20,6 +20,7 @@ import com.birdy.fragileLife.slots.SlotCommand;
 import com.birdy.fragileLife.slots.SlotGUIListener;
 import com.birdy.fragileLife.store.StoreCommand;
 import com.birdy.fragileLife.store.StoreGUIListener;
+import com.birdy.fragileLife.tabcompleters.SoulFragmentTabCompleter;
 import com.birdy.fragileLife.tags.TagCommand;
 import com.birdy.fragileLife.tags.TagGUIListener;
 import net.kyori.adventure.text.Component;
@@ -27,6 +28,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import com.birdy.fragileLife.managers.TeamManager;
@@ -81,6 +83,7 @@ public final class FragileLife extends JavaPlugin {
         }
 
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(this, teamManager, profileManager, healthBoard), this);
+        getServer().getPluginManager().registerEvents(new PlayerLeaveListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerDamageListener(profileManager), this);
         getServer().getPluginManager().registerEvents(new PlayerDeathListener(teamManager, profileManager), this);
         getServer().getPluginManager().registerEvents(new ChatGUIListener(profileManager), this);
@@ -101,6 +104,7 @@ public final class FragileLife extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new SlotGUIListener(this,profileManager),this);
         getServer().getPluginManager().registerEvents(new ProjectileHitListener(this), this);
         getServer().getPluginManager().registerEvents(new ProjectileLaunchListener(this), this);
+        getServer().getPluginManager().registerEvents(new SignChangeListener(), this);
 
         getCommand("chat").setExecutor(new ChatCommand(profileManager));
         getCommand("gift").setExecutor(new GiftCommand(profileManager, teamManager));
@@ -111,6 +115,7 @@ public final class FragileLife extends JavaPlugin {
         getCommand("nick").setExecutor(new NickCommand(profileManager, teamManager));
         getCommand("store").setExecutor(new StoreCommand(profileManager));
         getCommand("soulfragment").setExecutor(new SoulFragmentCommand(profileManager));
+        getCommand("soulfragment").setTabCompleter(new SoulFragmentTabCompleter());
         getCommand("slot").setExecutor(new SlotCommand(profileManager));
     }
 

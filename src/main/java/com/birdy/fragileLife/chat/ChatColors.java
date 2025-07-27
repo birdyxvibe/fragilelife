@@ -27,7 +27,7 @@ public class ChatColors {
                 new String[] {"Basic bitch!"}));
         COLORS.put("Charcoal", new ColorOption(TextColor.fromHexString("#575757"), Material.DEEPSLATE_TILES,
                 new String[] {"Dark as my browser history"}));
-        COLORS.put("Taupe", new ColorOption(TextColor.fromHexString("#CCAC93"), Material.PACKED_MUD,
+        COLORS.put("Taupe", new ColorOption(TextColor.fromHexString("#edd3be"), Material.PACKED_MUD,
                 new String[] {"Like beige but with a", "choking kink"}));
         COLORS.put("Rose", new ColorOption(TextColor.fromHexString("#E3242B"), Material.NETHER_WART_BLOCK,
                 new String[] {"Red, like the blood of my ex"}));
